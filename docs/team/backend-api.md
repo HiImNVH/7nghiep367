@@ -68,6 +68,9 @@ Fixed:
 - The default `MODEL_ARTIFACT_PATH` no longer depends on the cwd.
 - Added `tests/fixtures/model-artifacts/fixture-low-confidence/` (`fixtureResponse`) for
   low-confidence contract/E2E tests (T045, T047).
+- Absent `timingsMs`/`qualityHints` were sent as `null`. `openapi.yaml` makes them optional but not
+  nullable, and the web client (T040) rejects `null`. They are now omitted. `classLabel` is now
+  required (nullable) in the generated schema, as in the contract.
 
 Tests: 84/84 pass (`python -m pytest` from repo root). New tests cover low-confidence 200,
 `MODEL_NOT_READY` 503, `PREDICTION_FAILED` 500, real concurrent `SERVICE_BUSY`, degraded startup,

@@ -23,8 +23,8 @@ class RawPredictionResult:
     classLabel: Optional[str]
     confidence: float
     text: str
-    timingsMs: PredictionTimings
-    qualityHints: PredictionQualityHints
+    timingsMs: Optional[PredictionTimings]
+    qualityHints: Optional[PredictionQualityHints]
 
 
 class BasePredictor(ABC):
