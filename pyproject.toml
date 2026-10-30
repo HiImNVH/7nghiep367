@@ -1,0 +1,9 @@
+[tool.pytest.ini_options]
+minversion = "8.0"
+testpaths = [
+    "services/inference-api/tests",
+    "tests/integration",
+]
+pythonpath = [
+    "services/inference-api/src",
+]
