@@ -1,0 +1,38 @@
+{
+  "modelVersion": "vsl-fixture-low-confidence-v0.1.0",
+  "artifactKind": "fixture",
+  "datasetVersion": "fixture-manifest-v1",
+  "featureSchemaVersion": "vsl-feature-v1.0",
+  "extractorVersion": "mediapipe-holistic-0.10.14",
+  "meanings": [
+    "XIN_CHAO",
+    "CAM_ON",
+    "TAM_BIET"
+  ],
+  "classLabels": [
+    "XIN_CHAO_HCM_1",
+    "CAM_ON_HCM_1",
+    "TAM_BIET_HCM_1"
+  ],
+  "meaningMap": {
+    "XIN_CHAO_HCM_1": "XIN_CHAO",
+    "CAM_ON_HCM_1": "CAM_ON",
+    "TAM_BIET_HCM_1": "TAM_BIET"
+  },
+  "displayTextMap": {
+    "XIN_CHAO": "Xin chào",
+    "CAM_ON": "Cảm ơn",
+    "TAM_BIET": "Tạm biệt"
+  },
+  "fixtureResponse": {
+    "classLabel": "CAM_ON_HCM_1",
+    "confidence": 0.42
+  },
+  "acceptanceThreshold": 0.70,
+  "accuracy": null,
+  "macroF1": null,
+  "perMeaningPrecision": null,
+  "perMeaningRecall": null,
+  "evaluatedAt": null,
+  "demoReady": false
+}
