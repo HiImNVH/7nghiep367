@@ -1,5 +1,6 @@
 """Unit tests proving accepted/rejected prediction states cannot be combined incorrectly (T020)."""
 
+import json
 import uuid
 
 import pytest
@@ -33,6 +34,29 @@ def test_valid_accepted_response():
 def test_valid_rejected_response():
     response = _response(accepted=False, text=FALLBACK_REJECTED_TEXT, classLabel=None, confidence=0.3)
     assert response.classLabel is None
+
+
+def test_absent_diagnostics_are_omitted_but_null_class_label_is_kept():
+    """openapi.yaml: timingsMs/qualityHints are optional (not nullable); classLabel is required nullable."""
+    response = _response(accepted=False, text=FALLBACK_REJECTED_TEXT, classLabel=None, confidence=0.3)
+
+    data = json.loads(response.model_dump_json())
+
+    assert "timingsMs" not in data
+    assert "qualityHints" not in data
+    assert data["classLabel"] is None
+
+
+def test_present_diagnostics_are_serialized():
+    response = _response(
+        timingsMs={"decode": 1, "extract": 2, "infer": 3},
+        qualityHints={"handsDetectedRatio": 0.5, "frameCount": 10},
+    )
+
+    data = response.model_dump(mode="json")
+
+    assert data["timingsMs"] == {"decode": 1, "extract": 2, "infer": 3}
+    assert data["qualityHints"] == {"handsDetectedRatio": 0.5, "frameCount": 10}
 
 
 @pytest.mark.parametrize(

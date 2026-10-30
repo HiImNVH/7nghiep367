@@ -2,7 +2,13 @@
 
 from typing import Optional
 from uuid import UUID
-from pydantic import BaseModel, Field, model_validator
+from pydantic import (
+    BaseModel,
+    Field,
+    SerializerFunctionWrapHandler,
+    model_serializer,
+    model_validator,
+)
 
 
 class PredictionTimings(BaseModel):
@@ -30,7 +36,7 @@ class PredictionResponse(BaseModel):
 
     requestId: str = Field(..., description="UUID correlation ID echoing request header")
     text: str = Field(..., description="Vietnamese text prediction or fallback message")
-    classLabel: Optional[str] = Field(None, description="Recognized class label; null when rejected")
+    classLabel: Optional[str] = Field(..., description="Recognized class label; null when rejected")
     confidence: float = Field(..., ge=0.0, le=1.0, description="Confidence score between 0 and 1")
     accepted: bool = Field(..., description="True if confidence >= threshold and clip was valid")
     modelVersion: str = Field(..., description="Version of the model that performed inference")
@@ -55,3 +61,13 @@ class PredictionResponse(BaseModel):
             raise ValueError("Rejected prediction must have classLabel = null")
 
         return self
+
+    @model_serializer(mode="wrap")
+    def omit_absent_diagnostics(self, handler: SerializerFunctionWrapHandler):
+        """Diagnostics are optional but not nullable in openapi.yaml: omit them instead of sending null.
+        No return annotation on purpose: it keeps the documented OpenAPI schema for this model."""
+        data = handler(self)
+        for key in ("timingsMs", "qualityHints"):
+            if data.get(key) is None:
+                data.pop(key, None)
+        return data

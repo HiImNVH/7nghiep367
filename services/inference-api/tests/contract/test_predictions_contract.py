@@ -205,6 +205,50 @@ def test_prediction_unexpected_failure_500_hides_internal_detail(client: TestCli
     assert list(tmp_path.iterdir()) == []
 
 
+class _NoDiagnosticsPredictor(BasePredictor):
+    """Predictor that reports no optional diagnostics."""
+
+    def __init__(self, inner):
+        self._inner = inner
+
+    @property
+    def metadata(self):
+        return self._inner.metadata
+
+    def predict(self, clip_path, request_id):
+        result = self._inner.predict(clip_path, request_id)
+        result.timingsMs = None
+        result.qualityHints = None
+        return result
+
+
+def test_prediction_omits_absent_diagnostics(client: TestClient, monkeypatch):
+    """Optional diagnostics are omitted, never sent as null (web client rejects null for them)."""
+    monkeypatch.setattr(
+        predictor_registry, "_active_predictor", _NoDiagnosticsPredictor(predictor_registry.active_predictor)
+    )
+
+    files = {"clip": ("camera_clip.webm", io.BytesIO(VALID_WEBM_BYTES), "video/webm")}
+    response = client.post("/api/v1/predictions", files=files)
+
+    assert response.status_code == 200
+    data = response.json()
+    assert "timingsMs" not in data
+    assert "qualityHints" not in data
+    assert data["accepted"] is True
+
+
+def test_openapi_schema_still_documents_diagnostics(client: TestClient):
+    schema = client.get("/openapi.json").json()["components"]["schemas"]
+
+    properties = schema["PredictionResponse"]["properties"]
+    assert {"timingsMs", "qualityHints", "classLabel"} <= set(properties)
+    # Matches contracts/openapi.yaml: classLabel is required (nullable), diagnostics are optional
+    required = set(schema["PredictionResponse"]["required"])
+    assert "classLabel" in required
+    assert not {"timingsMs", "qualityHints"} & required
+
+
 def test_prediction_accepts_webm_with_codec_parameters(client: TestClient):
     files = {"clip": ("camera_clip.webm", io.BytesIO(VALID_WEBM_BYTES), "video/webm;codecs=vp9")}
 
