@@ -4,3 +4,9 @@ coverage/
 playwright-report/
 test-results/
 .env.local
+
+# Local integration environments and private inventories
+.int-env/
+.local/
+__pycache__/
+.pytest_cache/
