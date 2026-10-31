@@ -4,3 +4,9 @@ coverage/
 playwright-report/
 test-results/
 .env.local
+
+# Python runtime and test cache
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
