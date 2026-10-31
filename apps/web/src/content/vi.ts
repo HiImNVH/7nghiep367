@@ -94,7 +94,7 @@ export const cameraErrors = {
 export const requestErrors = {
   network: {
     title: 'Không kết nối được dịch vụ',
-    guidance: 'Hãy kiểm tra kết nối tới dịch vụ nhận diện rồi thử lại.',
+    guidance: 'Dịch vụ nhận diện chưa chạy hoặc đang mất kết nối. Hãy liên hệ nhóm vận hành để khởi động dịch vụ rồi thử lại.',
   },
   timeout: {
     title: 'Chờ kết quả quá lâu',

@@ -75,6 +75,29 @@ support while raw server messages are never rendered.
 
 ## Verification
 
+Quick browser smoke checks (page startup, fake-camera preview without upload,
+and recovery from an unavailable backend):
+
+```powershell
+npm.cmd run test:smoke
+```
+
+Run lint, all unit tests, the production build (including TypeScript checks),
+and smoke checks together:
+
+```powershell
+npm.cmd run check
+```
+
+Both browser commands use Playwright Chromium by default. On Windows with Edge,
+set `$env:VISIGN_BROWSER_CHANNEL = 'msedge'` first. Smoke checks use a fake camera
+and intercepted API responses; they do not verify a live model or backend.
+Smoke preview uses a synthetic canvas MediaStream to avoid OS fake-device driver
+instability. Run `test:browser` separately for the device/MediaRecorder workflow.
+Prefer the bundled Chromium for repeatable automated runs; install it with
+`npx.cmd playwright install chromium --only-shell`. Clear an existing Edge override
+with `Remove-Item Env:VISIGN_BROWSER_CHANNEL -ErrorAction SilentlyContinue`.
+
 ```powershell
 npm test
 npm run typecheck

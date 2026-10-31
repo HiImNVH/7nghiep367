@@ -10,7 +10,9 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "vitest run",
-    "test:browser": "playwright test"
+    "test:browser": "playwright test",
+    "test:smoke": "playwright test tests/browser/smoke.spec.ts",
+    "check": "npm run lint && npm test && npm run build && npm run test:smoke"
   },
   "engines": {
     "node": ">=22.12.0"

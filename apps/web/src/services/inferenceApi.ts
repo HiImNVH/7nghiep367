@@ -78,10 +78,14 @@ export function createInferenceApi({ baseUrl = '', timeoutMs = 10_000, fetcher }
           effectiveId = headerId;
         }
         let body: unknown;
-        try { body = await response.json(); } catch { throw new InferenceApiError('invalidResponse', effectiveId); }
+        // A disconnected upstream can produce an empty/text proxy response.
+        // Preserve contract errors when present, but classify gateway failures
+        // as unavailable connectivity rather than malformed model results.
+        const responseError = response.status === 502 || response.status === 504 ? 'network' : 'invalidResponse';
+        try { body = await response.json(); } catch { throw new InferenceApiError(responseError, effectiveId); }
         if (headerId && object(body) && 'requestId' in body && body.requestId !== headerId) throw new InferenceApiError('invalidResponse', effectiveId);
         if (!response.ok) {
-          if (!isError(body)) throw new InferenceApiError('invalidResponse', effectiveId);
+          if (!isError(body)) throw new InferenceApiError(responseError, effectiveId);
           const retry = response.headers.get('Retry-After');
           const retryAfter = retry && /^[1-9]\d*$/.test(retry) && Number.isSafeInteger(Number(retry)) ? Number(retry) : undefined;
           // Never display the server's message: stable Vietnamese catalog only.

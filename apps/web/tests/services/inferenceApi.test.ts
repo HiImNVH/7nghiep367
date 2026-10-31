@@ -57,4 +57,12 @@ describe('OpenAPI transport (T040)', () => {
     server.use(http.get(`${origin}/api/v1/model-info`, () => HttpResponse.error()));
     await expect(api.modelInfo()).rejects.toMatchObject({ code: 'network' });
   });
+  it.each([502, 504])('maps a plain HTTP %s gateway failure to an unavailable service', async status => {
+    server.use(http.get(`${origin}/api/v1/model-info`, () => new HttpResponse('', { status })));
+    await expect(api.modelInfo()).rejects.toMatchObject({ code: 'network' });
+  });
+  it('still rejects a successful HTML response as invalid', async () => {
+    server.use(http.get(`${origin}/api/v1/model-info`, () => HttpResponse.html('<html>Wrong service</html>')));
+    await expect(api.modelInfo()).rejects.toMatchObject({ code: 'invalidResponse' });
+  });
 });

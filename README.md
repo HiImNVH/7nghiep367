@@ -15,7 +15,7 @@ npm run dev
 ```
 
 Mở địa chỉ Vite in ra trong terminal. Frontend mặc định kết nối backend ở
-`http://127.0.0.1:8000` thông qua proxy `/api`. Cần chạy API tương thích của Tín
+`   ` thông qua proxy `/api`. Cần chạy API tương thích của Tín
 để nhận diện thật. Nếu backend chưa chạy, giao diện sẽ báo lỗi kết nối và cho
 phép thử lại. Bản này không kèm backend hoặc model đã huấn luyện.
 
@@ -31,6 +31,20 @@ npm run typecheck
 npm run lint
 npm run build
 ```
+
+Chạy gộp lint, toàn bộ unit test, build/TypeScript và smoke test trình duyệt:
+
+```powershell
+npx.cmd playwright install chromium --only-shell
+npm.cmd run check
+```
+
+Chỉ chạy smoke test: `npm.cmd run test:smoke`. Smoke test kiểm tra mở trang,
+xem trước camera giả không tải clip lên, và thử lại sau lỗi backend 502.
+API được mô phỏng trong test; kết quả này không xác nhận backend/model thật.
+Nên dùng Chromium đi kèm Playwright để kiểm tra tự động. Nếu đã đặt biến
+`VISIGN_BROWSER_CHANNEL` cho Edge, bỏ bằng
+`Remove-Item Env:VISIGN_BROWSER_CHANNEL -ErrorAction SilentlyContinue` để dùng Chromium.
 
 Kiểm tra trình duyệt trên Windows có Microsoft Edge:
 
