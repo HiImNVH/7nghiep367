@@ -1,0 +1,796 @@
+{
+  "scope": "Preprocessing wall clock only, including asset verification and detector initialization",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "schemaVersion": "visign-xy-32-v0.3-draft",
+  "sampledClipCount": 9,
+  "measurementCount": 27,
+  "p50Ms": 1204.4637999933911,
+  "p95Ms": 2506.1422399958246,
+  "maxMs": 2514.28049999231,
+  "underThreeSecondsRatio": 1.0,
+  "runs": [
+    {
+      "clipName": "HCM_Giấy_1.mp4",
+      "clipSha256": "0fbb1223c8384817ad9314d8149caacd7995035f90d29113dfcebb1c7aef4615",
+      "repeat": 0,
+      "wallMs": 2004.035699996166,
+      "ptsSpanMs": 4004.0,
+      "decodedFrameCount": 121,
+      "extractedFrameCount": 64,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.25,
+        "right_hand": 0.421875,
+        "shoulders": 1.0,
+        "face": 0.0
+      },
+      "usableTensorFrameRatio": 0.40625,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 52.56,
+        "decode": 249.96,
+        "extractIncludingInit": 1691.2,
+        "transform": 0.86,
+        "total": 1994.59
+      }
+    },
+    {
+      "clipName": "O_Đau bụng_1.mp4",
+      "clipSha256": "42710c3686e897e27ec149c8e87e20196d5ccdf7e6744994bf542ceb39ff55ac",
+      "repeat": 0,
+      "wallMs": 2514.28049999231,
+      "ptsSpanMs": 4537.866666666667,
+      "decodedFrameCount": 137,
+      "extractedFrameCount": 64,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.21875,
+        "right_hand": 0.90625,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.9375,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 56.62,
+        "decode": 450.31,
+        "extractIncludingInit": 1997.12,
+        "transform": 1.81,
+        "total": 2505.87
+      }
+    },
+    {
+      "clipName": "O_Thuốc_1.mp4",
+      "clipSha256": "f8f535ac4033e6dce8a11b0ff7d8778b6bee9abb031aa25edd80bd2f0b6740fa",
+      "repeat": 0,
+      "wallMs": 2383.7161999981618,
+      "ptsSpanMs": 5338.666666666667,
+      "decodedFrameCount": 161,
+      "extractedFrameCount": 64,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.5,
+        "right_hand": 0.78125,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.96875,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 74.8,
+        "decode": 517.57,
+        "extractIncludingInit": 1782.73,
+        "transform": 0.96,
+        "total": 2376.06
+      }
+    },
+    {
+      "clipName": "O_Xin chào_1.mp4",
+      "clipSha256": "9830d076df2c8ce22d333a8d7cfcaaecaf1ec6ad3ceb503e8d77ae4b0e4b5be3",
+      "repeat": 0,
+      "wallMs": 1982.7427999989595,
+      "ptsSpanMs": 3837.1666666666665,
+      "decodedFrameCount": 116,
+      "extractedFrameCount": 64,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.015625,
+        "right_hand": 0.453125,
+        "shoulders": 1.0,
+        "face": 0.0
+      },
+      "usableTensorFrameRatio": 0.40625,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 50.81,
+        "decode": 265.07,
+        "extractIncludingInit": 1660.61,
+        "transform": 0.91,
+        "total": 1977.42
+      }
+    },
+    {
+      "clipName": "O_Cảm ơn_1.mp4",
+      "clipSha256": "504fb16fd5cd921c97ea4aa31b457ed2e335c4f05564f336a09ce274f1a64e8d",
+      "repeat": 0,
+      "wallMs": 1204.4637999933911,
+      "ptsSpanMs": 3931.1,
+      "decodedFrameCount": 39,
+      "extractedFrameCount": 39,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.2564102564102564,
+        "right_hand": 0.3333333333333333,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.3125,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 55.22,
+        "decode": 50.32,
+        "extractIncludingInit": 1095.83,
+        "transform": 0.77,
+        "total": 1202.15
+      }
+    },
+    {
+      "clipName": "chrome-vp8.webm",
+      "clipSha256": "a7c092db04c074575bdb95c66b1381a66fc7db68e3677d7b5ec7236446ca57ff",
+      "repeat": 0,
+      "wallMs": 685.3085000038845,
+      "ptsSpanMs": 2378.0,
+      "decodedFrameCount": 16,
+      "extractedFrameCount": 16,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.0,
+        "right_hand": 0.3125,
+        "shoulders": 1.0,
+        "face": 0.4375
+      },
+      "usableTensorFrameRatio": 0.125,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 51.06,
+        "decode": 13.89,
+        "extractIncludingInit": 618.08,
+        "transform": 1.15,
+        "total": 684.18
+      }
+    },
+    {
+      "clipName": "chrome-vp9.webm",
+      "clipSha256": "94baa6f6fbf118374efed28aed7dbdbcc48b716bea9f6d117e0d16c727ea0107",
+      "repeat": 0,
+      "wallMs": 1168.155300008948,
+      "ptsSpanMs": 2376.0,
+      "decodedFrameCount": 37,
+      "extractedFrameCount": 37,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.3783783783783784,
+        "right_hand": 0.3783783783783784,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.3125,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 48.0,
+        "decode": 28.08,
+        "extractIncludingInit": 1089.78,
+        "transform": 0.73,
+        "total": 1166.6
+      }
+    },
+    {
+      "clipName": "msedge-vp8.webm",
+      "clipSha256": "3d8f4cca262091ed0407de93040041c6e6450215b25cef744d149cc0b97c9998",
+      "repeat": 0,
+      "wallMs": 1026.416100008646,
+      "ptsSpanMs": 2379.0,
+      "decodedFrameCount": 37,
+      "extractedFrameCount": 37,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.13513513513513514,
+        "right_hand": 0.40540540540540543,
+        "shoulders": 1.0,
+        "face": 0.7567567567567568
+      },
+      "usableTensorFrameRatio": 0.375,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 52.5,
+        "decode": 22.57,
+        "extractIncludingInit": 949.21,
+        "transform": 0.89,
+        "total": 1025.18
+      }
+    },
+    {
+      "clipName": "msedge-vp9.webm",
+      "clipSha256": "e94f328b5e9f30a96af7dac386dc5b0fc18ae64826c0d62eae442af1554dbf05",
+      "repeat": 0,
+      "wallMs": 1186.502600001404,
+      "ptsSpanMs": 2385.0,
+      "decodedFrameCount": 37,
+      "extractedFrameCount": 37,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.35135135135135137,
+        "right_hand": 0.3783783783783784,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.3125,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 54.87,
+        "decode": 28.01,
+        "extractIncludingInit": 1100.85,
+        "transform": 0.89,
+        "total": 1184.61
+      }
+    },
+    {
+      "clipName": "HCM_Giấy_1.mp4",
+      "clipSha256": "0fbb1223c8384817ad9314d8149caacd7995035f90d29113dfcebb1c7aef4615",
+      "repeat": 1,
+      "wallMs": 2116.5906000096584,
+      "ptsSpanMs": 4004.0,
+      "decodedFrameCount": 121,
+      "extractedFrameCount": 64,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.25,
+        "right_hand": 0.421875,
+        "shoulders": 1.0,
+        "face": 0.0
+      },
+      "usableTensorFrameRatio": 0.40625,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 59.81,
+        "decode": 329.78,
+        "extractIncludingInit": 1719.09,
+        "transform": 0.77,
+        "total": 2109.45
+      }
+    },
+    {
+      "clipName": "O_Đau bụng_1.mp4",
+      "clipSha256": "42710c3686e897e27ec149c8e87e20196d5ccdf7e6744994bf542ceb39ff55ac",
+      "repeat": 1,
+      "wallMs": 2346.699499990791,
+      "ptsSpanMs": 4537.866666666667,
+      "decodedFrameCount": 137,
+      "extractedFrameCount": 64,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.21875,
+        "right_hand": 0.90625,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.9375,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 50.82,
+        "decode": 406.48,
+        "extractIncludingInit": 1879.75,
+        "transform": 1.2,
+        "total": 2338.25
+      }
+    },
+    {
+      "clipName": "O_Thuốc_1.mp4",
+      "clipSha256": "f8f535ac4033e6dce8a11b0ff7d8778b6bee9abb031aa25edd80bd2f0b6740fa",
+      "repeat": 1,
+      "wallMs": 2280.095500012976,
+      "ptsSpanMs": 5338.666666666667,
+      "decodedFrameCount": 161,
+      "extractedFrameCount": 64,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.5,
+        "right_hand": 0.78125,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.96875,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 50.04,
+        "decode": 461.27,
+        "extractIncludingInit": 1758.85,
+        "transform": 0.81,
+        "total": 2270.97
+      }
+    },
+    {
+      "clipName": "O_Xin chào_1.mp4",
+      "clipSha256": "9830d076df2c8ce22d333a8d7cfcaaecaf1ec6ad3ceb503e8d77ae4b0e4b5be3",
+      "repeat": 1,
+      "wallMs": 1866.5961999940919,
+      "ptsSpanMs": 3837.1666666666665,
+      "decodedFrameCount": 116,
+      "extractedFrameCount": 64,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.015625,
+        "right_hand": 0.453125,
+        "shoulders": 1.0,
+        "face": 0.0
+      },
+      "usableTensorFrameRatio": 0.40625,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 49.84,
+        "decode": 257.07,
+        "extractIncludingInit": 1551.54,
+        "transform": 0.75,
+        "total": 1859.2
+      }
+    },
+    {
+      "clipName": "O_Cảm ơn_1.mp4",
+      "clipSha256": "504fb16fd5cd921c97ea4aa31b457ed2e335c4f05564f336a09ce274f1a64e8d",
+      "repeat": 1,
+      "wallMs": 1129.4254999957047,
+      "ptsSpanMs": 3931.1,
+      "decodedFrameCount": 39,
+      "extractedFrameCount": 39,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.2564102564102564,
+        "right_hand": 0.3333333333333333,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.3125,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 50.42,
+        "decode": 34.66,
+        "extractIncludingInit": 1041.1,
+        "transform": 0.73,
+        "total": 1126.91
+      }
+    },
+    {
+      "clipName": "chrome-vp8.webm",
+      "clipSha256": "a7c092db04c074575bdb95c66b1381a66fc7db68e3677d7b5ec7236446ca57ff",
+      "repeat": 1,
+      "wallMs": 640.3172999998787,
+      "ptsSpanMs": 2378.0,
+      "decodedFrameCount": 16,
+      "extractedFrameCount": 16,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.0,
+        "right_hand": 0.3125,
+        "shoulders": 1.0,
+        "face": 0.4375
+      },
+      "usableTensorFrameRatio": 0.125,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 53.35,
+        "decode": 14.99,
+        "extractIncludingInit": 570.8,
+        "transform": 0.54,
+        "total": 639.68
+      }
+    },
+    {
+      "clipName": "chrome-vp9.webm",
+      "clipSha256": "94baa6f6fbf118374efed28aed7dbdbcc48b716bea9f6d117e0d16c727ea0107",
+      "repeat": 1,
+      "wallMs": 1122.2082000022056,
+      "ptsSpanMs": 2376.0,
+      "decodedFrameCount": 37,
+      "extractedFrameCount": 37,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.3783783783783784,
+        "right_hand": 0.3783783783783784,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.3125,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 56.55,
+        "decode": 28.54,
+        "extractIncludingInit": 1035.27,
+        "transform": 0.84,
+        "total": 1121.21
+      }
+    },
+    {
+      "clipName": "msedge-vp8.webm",
+      "clipSha256": "3d8f4cca262091ed0407de93040041c6e6450215b25cef744d149cc0b97c9998",
+      "repeat": 1,
+      "wallMs": 1124.3801999953575,
+      "ptsSpanMs": 2379.0,
+      "decodedFrameCount": 37,
+      "extractedFrameCount": 37,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.13513513513513514,
+        "right_hand": 0.40540540540540543,
+        "shoulders": 1.0,
+        "face": 0.7567567567567568
+      },
+      "usableTensorFrameRatio": 0.375,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 56.86,
+        "decode": 21.84,
+        "extractIncludingInit": 1042.28,
+        "transform": 1.29,
+        "total": 1122.28
+      }
+    },
+    {
+      "clipName": "msedge-vp9.webm",
+      "clipSha256": "e94f328b5e9f30a96af7dac386dc5b0fc18ae64826c0d62eae442af1554dbf05",
+      "repeat": 1,
+      "wallMs": 1447.7574999909848,
+      "ptsSpanMs": 2385.0,
+      "decodedFrameCount": 37,
+      "extractedFrameCount": 37,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.35135135135135137,
+        "right_hand": 0.3783783783783784,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.3125,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 53.43,
+        "decode": 27.26,
+        "extractIncludingInit": 1365.43,
+        "transform": 0.64,
+        "total": 1446.76
+      }
+    },
+    {
+      "clipName": "HCM_Giấy_1.mp4",
+      "clipSha256": "0fbb1223c8384817ad9314d8149caacd7995035f90d29113dfcebb1c7aef4615",
+      "repeat": 2,
+      "wallMs": 1832.5611000036588,
+      "ptsSpanMs": 4004.0,
+      "decodedFrameCount": 121,
+      "extractedFrameCount": 64,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.25,
+        "right_hand": 0.421875,
+        "shoulders": 1.0,
+        "face": 0.0
+      },
+      "usableTensorFrameRatio": 0.40625,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 55.63,
+        "decode": 275.2,
+        "extractIncludingInit": 1494.59,
+        "transform": 0.98,
+        "total": 1826.4
+      }
+    },
+    {
+      "clipName": "O_Đau bụng_1.mp4",
+      "clipSha256": "42710c3686e897e27ec149c8e87e20196d5ccdf7e6744994bf542ceb39ff55ac",
+      "repeat": 2,
+      "wallMs": 2510.4640999925323,
+      "ptsSpanMs": 4537.866666666667,
+      "decodedFrameCount": 137,
+      "extractedFrameCount": 64,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.21875,
+        "right_hand": 0.90625,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.9375,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 60.58,
+        "decode": 453.56,
+        "extractIncludingInit": 1978.83,
+        "transform": 0.82,
+        "total": 2493.79
+      }
+    },
+    {
+      "clipName": "O_Thuốc_1.mp4",
+      "clipSha256": "f8f535ac4033e6dce8a11b0ff7d8778b6bee9abb031aa25edd80bd2f0b6740fa",
+      "repeat": 2,
+      "wallMs": 2496.057900003507,
+      "ptsSpanMs": 5338.666666666667,
+      "decodedFrameCount": 161,
+      "extractedFrameCount": 64,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.5,
+        "right_hand": 0.78125,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.96875,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 52.85,
+        "decode": 536.48,
+        "extractIncludingInit": 1898.88,
+        "transform": 0.68,
+        "total": 2488.89
+      }
+    },
+    {
+      "clipName": "O_Xin chào_1.mp4",
+      "clipSha256": "9830d076df2c8ce22d333a8d7cfcaaecaf1ec6ad3ceb503e8d77ae4b0e4b5be3",
+      "repeat": 2,
+      "wallMs": 1765.8577999973204,
+      "ptsSpanMs": 3837.1666666666665,
+      "decodedFrameCount": 116,
+      "extractedFrameCount": 64,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.015625,
+        "right_hand": 0.453125,
+        "shoulders": 1.0,
+        "face": 0.0
+      },
+      "usableTensorFrameRatio": 0.40625,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 49.57,
+        "decode": 244.6,
+        "extractIncludingInit": 1465.25,
+        "transform": 0.8,
+        "total": 1760.22
+      }
+    },
+    {
+      "clipName": "O_Cảm ơn_1.mp4",
+      "clipSha256": "504fb16fd5cd921c97ea4aa31b457ed2e335c4f05564f336a09ce274f1a64e8d",
+      "repeat": 2,
+      "wallMs": 1053.3875999972224,
+      "ptsSpanMs": 3931.1,
+      "decodedFrameCount": 39,
+      "extractedFrameCount": 39,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.2564102564102564,
+        "right_hand": 0.3333333333333333,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.3125,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 47.86,
+        "decode": 35.5,
+        "extractIncludingInit": 963.92,
+        "transform": 1.28,
+        "total": 1048.56
+      }
+    },
+    {
+      "clipName": "chrome-vp8.webm",
+      "clipSha256": "a7c092db04c074575bdb95c66b1381a66fc7db68e3677d7b5ec7236446ca57ff",
+      "repeat": 2,
+      "wallMs": 634.1031000047224,
+      "ptsSpanMs": 2378.0,
+      "decodedFrameCount": 16,
+      "extractedFrameCount": 16,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.0,
+        "right_hand": 0.3125,
+        "shoulders": 1.0,
+        "face": 0.4375
+      },
+      "usableTensorFrameRatio": 0.125,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 61.64,
+        "decode": 13.12,
+        "extractIncludingInit": 558.18,
+        "transform": 0.55,
+        "total": 633.49
+      }
+    },
+    {
+      "clipName": "chrome-vp9.webm",
+      "clipSha256": "94baa6f6fbf118374efed28aed7dbdbcc48b716bea9f6d117e0d16c727ea0107",
+      "repeat": 2,
+      "wallMs": 1018.6423999984981,
+      "ptsSpanMs": 2376.0,
+      "decodedFrameCount": 37,
+      "extractedFrameCount": 37,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.3783783783783784,
+        "right_hand": 0.3783783783783784,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.3125,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 49.52,
+        "decode": 28.32,
+        "extractIncludingInit": 935.16,
+        "transform": 2.19,
+        "total": 1015.19
+      }
+    },
+    {
+      "clipName": "msedge-vp8.webm",
+      "clipSha256": "3d8f4cca262091ed0407de93040041c6e6450215b25cef744d149cc0b97c9998",
+      "repeat": 2,
+      "wallMs": 1135.638400010066,
+      "ptsSpanMs": 2379.0,
+      "decodedFrameCount": 37,
+      "extractedFrameCount": 37,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.13513513513513514,
+        "right_hand": 0.40540540540540543,
+        "shoulders": 1.0,
+        "face": 0.7567567567567568
+      },
+      "usableTensorFrameRatio": 0.375,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 70.25,
+        "decode": 25.67,
+        "extractIncludingInit": 1038.02,
+        "transform": 0.64,
+        "total": 1134.58
+      }
+    },
+    {
+      "clipName": "msedge-vp9.webm",
+      "clipSha256": "e94f328b5e9f30a96af7dac386dc5b0fc18ae64826c0d62eae442af1554dbf05",
+      "repeat": 2,
+      "wallMs": 1115.7112999935634,
+      "ptsSpanMs": 2385.0,
+      "decodedFrameCount": 37,
+      "extractedFrameCount": 37,
+      "inputStatus": "HAS_USABLE_FRAMES",
+      "detectionRatios": {
+        "left_hand": 0.35135135135135137,
+        "right_hand": 0.3783783783783784,
+        "shoulders": 1.0,
+        "face": 1.0
+      },
+      "usableTensorFrameRatio": 0.3125,
+      "cpuRuntime": {
+        "mode": "windows-high-qos",
+        "applied": true
+      },
+      "tensorMaxAbsDiffAcrossRuns": 0.0,
+      "timingsMs": {
+        "metadataValidation": 50.83,
+        "decode": 29.68,
+        "extractIncludingInit": 1033.37,
+        "transform": 0.79,
+        "total": 1114.67
+      }
+    }
+  ]
+}

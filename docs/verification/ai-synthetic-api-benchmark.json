@@ -1,0 +1,13 @@
+{
+  "scope": "TestClient HTTP + real WebM preprocessing + synthetic GRU; excludes browser UI/network",
+  "sampleCount": 5,
+  "durationsMs": [
+    1143.3639000024414,
+    1379.0069999959087,
+    1212.9299999942305,
+    1199.1541000024881,
+    1265.9484000032535
+  ],
+  "p95Ms": 1356.3952799973777,
+  "demoReady": false
+}

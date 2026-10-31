@@ -1,0 +1,21 @@
+[project]
+name = "visign-ai"
+version = "0.1.0"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "av==19.0.2", "mediapipe==1.1.1", "numpy==2.5.4", "opencv-contrib-python==5.0.0.93",
+    "torch==2.11.0", "scikit-learn==1.9.1", "matplotlib==3.11.2", "pyyaml==6.0.3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff", "mypy"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/visign_ai"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"configs/feature_schema.json" = "visign_ai/configs/feature_schema.json"

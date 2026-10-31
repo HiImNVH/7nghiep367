@@ -1,0 +1,26 @@
+[
+  {
+    "mode": "legacy-serial",
+    "tensorMaxAbsDiff": 0.0,
+    "maskEqual": true,
+    "timingsMs": {
+      "metadataValidation": 51.65,
+      "decode": 258.86,
+      "extractIncludingInit": 4533.38,
+      "transform": 1.22,
+      "total": 4845.1
+    }
+  },
+  {
+    "mode": "legacy-parallel-all",
+    "tensorMaxAbsDiff": 0.0,
+    "maskEqual": true,
+    "timingsMs": {
+      "metadataValidation": 54.6,
+      "decode": 270.61,
+      "extractIncludingInit": 2508.01,
+      "transform": 1.19,
+      "total": 2834.4
+    }
+  }
+]

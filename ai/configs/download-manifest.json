@@ -1,0 +1,20 @@
+[
+  {
+    "name": "hand_landmarker.task",
+    "url": "https://storage.googleapis.com/mediapipe-models/hand_landmarker/hand_landmarker/float16/1/hand_landmarker.task",
+    "sha256": "FBC2A30080C3C557093B5DDFC334698132EB341044CCEE322CCF8BCF3607CDE1",
+    "purpose": "Extractor spike; not a trained sign classifier"
+  },
+  {
+    "name": "pose_landmarker_full.task",
+    "url": "https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_full/float16/1/pose_landmarker_full.task",
+    "sha256": "5134A3AAD27A58B93DA0088D431F366DA362B44E3CCFBE3462B3827A839011B1",
+    "purpose": "Extractor spike; not a trained sign classifier"
+  },
+  {
+    "name": "face_landmarker.task",
+    "url": "https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task",
+    "sha256": "64184E229B263107BC2B804C6625DB1341FF2BB731874B0BCC2FE6544E0BC9FF",
+    "purpose": "Extractor spike; not a trained sign classifier"
+  }
+]

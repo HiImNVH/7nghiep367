@@ -1,12 +1,12 @@
 # Chạy bản tích hợp local
 Tại thư mục này mở hai PowerShell, mỗi cửa sổ chạy một dòng:
 ~~~powershell
-.\.int-env\Scripts\python.exe -m uvicorn visign_api.main:app --host 127.0.0.1 --port 8000
+.\.venv-ai\Scripts\python.exe -m uvicorn visign_api.main:app --host 127.0.0.1 --port 8000
 npm.cmd --prefix apps/web run dev -- --port 5173 --strictPort
 ~~~
 Mở http://127.0.0.1:5173 và http://127.0.0.1:5173/api/v1/model-info. Fixture trả kết quả cố định để thử giao tiếp; không dùng để đánh giá nhận diện.
 
-Data: Inspect-Data.ps1 đọc Data tại vị trí gốc và ghi .local/inventory-generated.csv. Sao chép file này trước khi rà soát vì mỗi lần chạy sẽ tạo lại. Tùy chọn -Clip nhận đường dẫn tương đối bên trong Data để xuất tọa độ, ảnh và tensor với bộ xử lý ở Demo 2. Ví dụ:
+Data: Inspect-Data.ps1 đọc Data tại vị trí gốc và ghi .local/inventory-generated.csv. Sao chép file này trước khi rà soát vì mỗi lần chạy sẽ tạo lại. Tùy chọn -Clip nhận đường dẫn tương đối bên trong Data để xuất tọa độ, ảnh và tensor với package AI trong ai/. Ví dụ:
 ~~~powershell
 .\Inspect-Data.ps1 -Clip '1. Giấy tờ (giấy)\HCM_Giấy_1.mp4'
 ~~~

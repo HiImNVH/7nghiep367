@@ -1,9 +1,19 @@
 [tool.pytest.ini_options]
 minversion = "8.0"
+asyncio_default_fixture_loop_scope = "function"
 testpaths = [
     "services/inference-api/tests",
     "tests/integration",
+    "ai/tests",
 ]
 pythonpath = [
     "services/inference-api/src",
+    "ai/src",
 ]
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.mypy]
+ignore_missing_imports = true
+follow_imports = "skip"

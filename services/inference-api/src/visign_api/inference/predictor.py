@@ -100,10 +100,12 @@ def _build_fixture_predictor(
     return FixturePredictor(metadata, display_text_map, extras.get("fixtureResponse"))
 
 
-# Pilot/full need the GRU predictor built on visign_ai.landmarks (T015/T016/T036). Until it is
-# registered here, loading a pilot/full artifact fails closed instead of serving fixture output.
+# Pilot/full use the optional shared AI package. Missing assets or weights fail closed.
+from visign_api.inference.gru_predictor import build_gru_predictor
 PREDICTOR_FACTORIES: Dict[ArtifactKind, PredictorFactory] = {
     ArtifactKind.FIXTURE: _build_fixture_predictor,
+    ArtifactKind.PILOT: build_gru_predictor,
+    ArtifactKind.FULL: build_gru_predictor,
 }
 
 

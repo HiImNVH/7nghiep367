@@ -55,3 +55,6 @@ npm run test:browser
 
 Tests dùng dữ liệu API mô phỏng và camera giả trong môi trường kiểm thử.
 Tích hợp backend/model thật và nghiệm thu trên máy demo cần làm cùng nhóm.
+
+
+Phần AI của Cường và hướng dẫn train/evaluate nằm tại [ai/README.md](ai/README.md). Trạng thái triển khai và điểm chờ bàn giao nằm tại [docs/team/training-models.md](docs/team/training-models.md).

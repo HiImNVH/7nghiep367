@@ -14,3 +14,12 @@ __pycache__/
 # Local integration environments and private inventories
 .int-env/
 .local/
+
+# AI local environment, detector assets and generated outputs
+.venv-ai/
+ai/models/
+ai/artifacts/
+ai/processed/
+*.egg-info/
+.ruff_cache/
+.mypy_cache/

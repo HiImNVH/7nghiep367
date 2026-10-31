@@ -1,0 +1,7 @@
+seed: 42
+hidden_size: 128
+num_layers: 1
+batch_size: 32
+epochs: 60
+learning_rate: 0.001
+threshold_candidates: [0.5, 0.6, 0.7, 0.8, 0.9]
