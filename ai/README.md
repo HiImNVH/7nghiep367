@@ -100,3 +100,35 @@ Kết quả tối ưu tiền xử lý và giới hạn bằng chứng được g
 Windows mặc định bật chế độ hiệu năng cho riêng tiến trình AI. Để giữ chính sách CPU mặc định, đặt `$env:VISIGN_CPU_PERFORMANCE_MODE='0'` trước khi khởi động tiến trình. Restart tiến trình khi đổi cấu hình này. Nếu Windows không hỗ trợ, report ghi applied=false và inference vẫn hoạt động.
 
 Schema v0.3 lấy tối đa 64 frame theo PTS rồi tạo chuỗi 32 bước. Bản v0.2 đã lưu trong `configs/feature_schema.legacy-v0.2.json` và artifact cũ vẫn dùng schema đi kèm. Dữ liệu/model mới phải được trích/train theo đúng schema được nhóm duyệt.
+
+## Hợp đồng AI và backend
+
+Xem [quy cách video, schema, artifact và kiểm tra bàn giao](../docs/team/ai-backend-contract.md).
+
+
+## Bước tiếp theo sau khi Tín đồng ý tích hợp
+
+**Chạy AI thật để lấy range ngay**, không cần model GRU: chọn clip được phép kiểm thử và output mới. Lệnh gọi MediaPipe thật, không gọi fixture.
+
+```powershell
+.\scripts\Measure-AI.ps1 -ClipPaths 'K:/Dự án ViSign/Data/1. Giấy tờ (giấy)/HCM_Giấy_1.mp4' -OutputPath '.local/range-cuong-01' -Repeats 5
+```
+
+Đọc .local/range-cuong-01/benchmark.json: minMs/maxMs là khoảng thời gian; p50Ms/p95Ms và platform/processor/packageVersions dùng để đối chiếu với máy Tín. Gửi clip đã được phép chia sẻ có cùng SHA-256 để so cùng đầu vào. Schema hiện vẫn nháp, benchmark không đổi approval. Đây là decode/MediaPipe/transform, chưa gồm GRU, HTTP hay UI.
+
+**Sau khi có artifact train/evaluate thật**, xuất nguyên gói cho Tín. Cần schema được review, manifest/class map Quang duyệt và golden WebM. Tín đồng ý tích hợp không thay thế những đầu vào này.
+
+```powershell
+.\scripts\Export-Model.ps1 -ArtifactPath 'ai/artifacts/pilot-v1-evaluated' -ClipPath 'PATH_TO_REVIEWED_GOLDEN.webm' -OutputPath 'ai/artifacts/pilot-v1-delivery'
+.\scripts\Start-Api.ps1 -ArtifactPath 'ai/artifacts/pilot-v1-delivery' -ClipPath 'PATH_TO_REVIEWED_GOLDEN.webm'
+```
+
+Export kiểm compatibility/parity trên chính bản copy sẽ giao, giữ nguyên weights/schema/metadata, ghi parity-report.json và FILES-SHA256.json; không ghi đè output cũ, không đổi demoReady. Start yêu cầu checksum, preflight và đúng pilot/full. Backend kiểm checksum khi nạp delivery; sai thì fail closed/giữ predictor cũ nếu đang chạy. Muốn rollback sau restart, chọn lại ArtifactPath cũ đã smoke rồi chạy Start và kiểm health/model-info/prediction.
+
+Chạy front/back fixture khi chưa có model thật:
+
+```powershell
+.\scripts\Start-Api.ps1 -UseFixture
+```
+
+Fixture vẫn trả kết quả cố định. Không dùng fixture để lấy range của AI. Các script cần .venv-ai đã cài theo đầu README; nếu PowerShell chặn script thì chạy bằng powershell.exe -NoProfile -ExecutionPolicy Bypass -File với cùng tham số, chỉ thay policy của tiến trình đó.

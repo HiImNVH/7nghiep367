@@ -3,7 +3,9 @@
 import argparse
 import hashlib
 import platform
+import sys
 import time
+from importlib.metadata import version
 from pathlib import Path
 
 import numpy as np
@@ -62,8 +64,14 @@ def main():
             {
                 "scope": "Preprocessing including asset verification and detector initialization; excludes GRU, HTTP and UI",
                 "platform": platform.platform(),
+                "pythonVersion": platform.python_version(),
+                "machineArchitecture": platform.machine(),
+                "processor": platform.processor(),
+                "pythonImplementation": sys.implementation.name,
+                "packageVersions": {name: version(name) for name in ("mediapipe", "av", "numpy")},
                 "sampledClipCount": len(args.clips),
                 "measurementCount": len(records),
+                "minMs": float(durations.min()),
                 "p50Ms": float(np.percentile(durations, 50)),
                 "p95Ms": float(np.percentile(durations, 95)),
                 "maxMs": float(durations.max()),

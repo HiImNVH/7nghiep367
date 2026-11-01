@@ -43,3 +43,15 @@
 
 
 Kiểm tra sau tối ưu đạt 152 test, 0 skipped; lint và mypy cơ bản đạt. Legacy serial/parallel đều trùng tensor và mask baseline. Báo cáo hiện tại không thay thế nghiệm thu model VSL và browser end-to-end.
+
+## Review AI và backend ngày 01/11/2026
+
+Đã ghi [hợp đồng kỹ thuật và lệnh kiểm tra bàn giao](ai-backend-contract.md). Checkpoint train mới khóa cả thứ tự lớp và ánh xạ nghĩa/chữ hiển thị. Đã kiểm tra 160 test, 0 skipped và parity trên WebM với GRU tổng hợp. Schema vẫn draft chờ review diễn biến ký hiệu và dữ liệu pilot; không thay nghiệm thu VSL.
+
+## Sau khi Tín đồng ý phương án tích hợp
+
+Đã bổ sung script Measure-AI để đo MediaPipe thật trước khi có GRU, Export-Model để đóng artifact evaluated có parity/checksum và Start-Api để chọn fixture tường minh hoặc kiểm delivery pilot/full trước khi mở service. Đã ghi nhận xác nhận của Cường về việc Tín đồng ý phương án; schema vẫn nháp chờ review clip, chưa có manifest/class map được duyệt trong Data.
+
+Kiểm tra mới: 175 test passed, 0 skipped trong 32,92 giây; Ruff và mypy cơ bản đạt. Script export và start API đã chạy thật với checkpoint GRU tổng hợp; HTTP prediction/request ID/cleanup đạt, tensor/mask parity maxAbsDiff=0. MediaPipe trên clip 121 frame đo 5 lần: min 1844,35 ms, p50 1918,86 ms, p95 2104,75 ms, max 2148,87 ms. Đây là range tiền xử lý trên máy Cường, không phải VSL accuracy, máy Tín hoặc gate web toàn luồng. Có một cảnh báo Starlette TestClient/httpx deprecation.
+
+Bằng chứng: [tin-integration-next-step.json](../verification/tin-integration-next-step.json). Đầu ra artifact và clip test đều ở .local, không đưa checkpoint tổng hợp vào ai/artifacts như model chính thức.

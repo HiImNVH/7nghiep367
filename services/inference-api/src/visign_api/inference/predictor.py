@@ -182,6 +182,9 @@ class PredictorRegistry:
             path = Path.cwd() / path
 
         try:
+            from visign_api.inference.artifact_integrity import verify_delivery
+
+            verify_delivery(path)
             info_file = path / "model_info.json"
             if not info_file.exists():
                 raise FileNotFoundError(f"model_info.json not found at {path}")

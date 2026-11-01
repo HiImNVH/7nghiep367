@@ -27,6 +27,13 @@ class GRUPredictor:
         checkpoint = torch.load(
             self.artifact / "model.pt", map_location=self.device, weights_only=True
         )
+        # New checkpoints bind output indices to their meaning and displayed text.
+        self.label_binding_verified = "labelBinding" in checkpoint
+        if self.label_binding_verified and checkpoint["labelBinding"] != {
+            key: self.metadata[key]
+            for key in ("classLabels", "meaningMap", "displayTextMap")
+        }:
+            raise ValueError("Checkpoint label binding mismatch")
         expected_digest = checkpoint.get("schemaSha256")
         # Older draft checkpoints carried versions only. Accept their exact original schema.
         if expected_digest is None:

@@ -1,4 +1,6 @@
-# ViSign — Frontend của Hiển (P5)
+# ViSign — Frontend, backend và AI
+
+Repo có frontend của Hiển, backend của Tín và pipeline/training AI của Cường. Xem [ai/README.md](ai/README.md) để chạy MediaPipe thật, xuất model và chọn chế độ API. Backend mặc định dùng fixture trả cố định; muốn nhận diện thật cần artifact pilot/full đã train và được kiểm tra.
 
 Phần UX/UI và frontend dùng React, TypeScript và Vite. Mã nguồn nằm trong
 `apps/web/`, API contract nằm trong `contracts/`, bảng nhiệm vụ và bằng chứng
@@ -15,9 +17,9 @@ npm run dev
 ```
 
 Mở địa chỉ Vite in ra trong terminal. Frontend mặc định kết nối backend ở
-`   ` thông qua proxy `/api`. Cần chạy API tương thích của Tín
+`http://127.0.0.1:8000` thông qua proxy `/api`. Cần chạy API tương thích của Tín
 để nhận diện thật. Nếu backend chưa chạy, giao diện sẽ báo lỗi kết nối và cho
-phép thử lại. Bản này không kèm backend hoặc model đã huấn luyện.
+phép thử lại. Repo đã có backend và code AI; trọng số VSL đã huấn luyện chưa được kèm.
 
 Xem `apps/web/README.md` để cấu hình API và tìm hiểu luồng camera.
 

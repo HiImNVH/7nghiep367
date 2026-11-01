@@ -6,6 +6,7 @@ from visign_api.domain.errors import (
     ClipTooLongException,
     ClipTooShortException,
     InsufficientLandmarksException,
+    InvalidRequestException,
     NoPersonDetectedException,
 )
 from visign_api.domain.prediction import PredictionQualityHints, PredictionTimings
@@ -48,6 +49,7 @@ class GRUApiPredictor:
             )
         except PipelineError as error:
             errors = {
+                "INVALID_REQUEST": InvalidRequestException,
                 "CLIP_TOO_SHORT": ClipTooShortException,
                 "CLIP_TOO_LONG": ClipTooLongException,
                 "NO_PERSON_DETECTED": NoPersonDetectedException,

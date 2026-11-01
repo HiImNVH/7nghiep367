@@ -1,0 +1,30 @@
+{
+  "artifactLoadPassed": true,
+  "modelVersion": "synthetic-test-only",
+  "featureSchemaVersion": "visign-xy-32-v0.3-draft",
+  "extractorVersion": "tasks-hand-pose-face-1.1.1-24d9ff64192c8dc3",
+  "labelBindingVerified": true,
+  "demoReady": false,
+  "parity": {
+    "status": "PASSED",
+    "shape": [
+      32,
+      234
+    ],
+    "maxAbsDiff": 0.0,
+    "atol": 1e-06,
+    "masksEqual": true
+  },
+  "scope": "Technical compatibility only; not VSL accuracy or web latency acceptance",
+  "checkedOn": "2026-11-01",
+  "artifactScope": "Synthetic GRU trained by CLI workflow test; not a VSL trained model",
+  "clipScope": "Chrome VP8 MediaRecorder canvas fixture from a local reference; not physical webcam E2E",
+  "checks": {
+    "pytestPassed": 160,
+    "pytestSkipped": 0,
+    "pytestSeconds": 35.12,
+    "ruff": "PASSED",
+    "mypyBasic": "PASSED: 25 source files",
+    "warning": "Starlette TestClient/httpx deprecation"
+  }
+}

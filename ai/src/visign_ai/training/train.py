@@ -197,6 +197,9 @@ def train(args):
                 "modelConfig": model_config,
                 "stateDict": best_state,
                 "schemaSha256": schema_digest(schema),
+                "labelBinding": {key: metadata[key] for key in (
+                    "classLabels", "meaningMap", "displayTextMap"
+                )},
             },
             output / "model.pt",
         )

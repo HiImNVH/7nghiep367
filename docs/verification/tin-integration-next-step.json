@@ -1,0 +1,36 @@
+{
+  "scope": "Local technical smoke only; real MediaPipe and WebM, synthetic GRU checkpoint. No VSL accuracy or browser E2E acceptance.",
+  "exportScript": "PASSED",
+  "startApiScriptPilot": "PASSED",
+  "httpPredictionRequestIdCleanup": "PASSED",
+  "deliveryChecksums": 7,
+  "parity": {
+    "status": "PASSED",
+    "shape": [
+      32,
+      234
+    ],
+    "maxAbsDiff": 0.0,
+    "atol": 1e-06,
+    "masksEqual": true
+  },
+  "rangeScope": "Preprocessing including asset verification and detector initialization; excludes GRU, HTTP and UI",
+  "rangeMeasurementCount": 5,
+  "preprocessingMinMs": 1844.3545999762136,
+  "preprocessingP50Ms": 1918.8639000058174,
+  "preprocessingP95Ms": 2104.7466599789914,
+  "preprocessingMaxMs": 2148.866099974839,
+  "demoReady": false,
+  "checkedOn": "2026-11-01",
+  "branch": "Model/Cường",
+  "pytest": {
+    "passed": 175,
+    "skipped": 0,
+    "seconds": 32.92,
+    "warning": "Starlette TestClient/httpx deprecation"
+  },
+  "ruff": "PASSED",
+  "mypyBasic": "PASSED: 25 source files",
+  "otherPhysicalMachineTested": false,
+  "trainedVslArtifactAvailable": false
+}

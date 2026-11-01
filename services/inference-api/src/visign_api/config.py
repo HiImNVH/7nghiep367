@@ -29,7 +29,7 @@ class Settings(BaseSettings):
         alias="MODEL_ARTIFACT_PATH",
     )
     # Must equal featureSchemaVersion of every loaded artifact (T037 fail-closed check).
-    # Replace with ai/configs/feature_schema.json once T016 ships the shared schema file.
+    # Fixture default only; pilot/full must set FEATURE_SCHEMA_VERSION to the artifact version.
     feature_schema_version: str = Field(default="vsl-feature-v1.0", alias="FEATURE_SCHEMA_VERSION")
 
     # Input clip constraints
