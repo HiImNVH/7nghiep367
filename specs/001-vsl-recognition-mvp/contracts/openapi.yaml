@@ -1,0 +1,303 @@
+openapi: 3.1.0
+info:
+  title: ViSign Inference API
+  version: 1.0.0
+  description: Contract for the isolated-sign ViSign MVP.
+servers:
+  - url: http://localhost:8000
+paths:
+  /api/v1/health:
+    get:
+      operationId: getHealth
+      summary: Check service and model readiness
+      parameters:
+        - $ref: '#/components/parameters/RequestIdHeader'
+      responses:
+        '200':
+          description: Service status
+          headers:
+            X-Request-ID:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+  /api/v1/model-info:
+    get:
+      operationId: getModelInfo
+      summary: Read active model metadata
+      parameters:
+        - $ref: '#/components/parameters/RequestIdHeader'
+      responses:
+        '200':
+          description: Active model information
+          headers:
+            X-Request-ID:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModelInfo'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+  /api/v1/predictions:
+    post:
+      operationId: createPrediction
+      summary: Classify one isolated sign captured from the camera
+      parameters:
+        - $ref: '#/components/parameters/RequestIdHeader'
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [clip]
+              properties:
+                clip:
+                  type: string
+                  format: binary
+                  description: A short camera recording for one isolated sign.
+      responses:
+        '200':
+          description: Prediction completed, including rejected low-confidence outcomes
+          headers:
+            X-Request-ID:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PredictionResponse'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '413':
+          description: Camera clip exceeds the configured size limit
+          headers:
+            X-Request-ID:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '415':
+          description: Unsupported camera clip media type
+          headers:
+            X-Request-ID:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '422':
+          description: Clip is readable but does not satisfy inference constraints
+          headers:
+            X-Request-ID:
+              $ref: '#/components/headers/RequestId'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '503':
+          $ref: '#/components/responses/ServiceUnavailable'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  parameters:
+    RequestIdHeader:
+      name: X-Request-ID
+      in: header
+      required: false
+      description: Optional UUID supplied by the caller. The service generates one when omitted and echoes the effective value in the response header.
+      schema:
+        type: string
+        format: uuid
+  headers:
+    RequestId:
+      description: Effective request correlation UUID; matches the response body's requestId when a body is present.
+      schema:
+        type: string
+        format: uuid
+    RetryAfter:
+      description: Suggested whole seconds before retrying a temporarily busy inference service.
+      schema:
+        type: integer
+        minimum: 1
+  responses:
+    BadRequest:
+      description: Malformed request
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/RequestId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    ServiceUnavailable:
+      description: Model or inference service is not ready
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/RequestId'
+        Retry-After:
+          $ref: '#/components/headers/RetryAfter'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+    InternalServerError:
+      description: Prediction failed unexpectedly without exposing internal details
+      headers:
+        X-Request-ID:
+          $ref: '#/components/headers/RequestId'
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorEnvelope'
+  schemas:
+    HealthResponse:
+      type: object
+      required: [status, modelReady]
+      properties:
+        status:
+          type: string
+          enum: [ok, degraded]
+        modelReady:
+          type: boolean
+          description: True when any compatible artifact is loaded; use ModelInfo.demoReady for release readiness.
+        modelVersion:
+          type: [string, 'null']
+    ModelInfo:
+      type: object
+      required:
+        - modelVersion
+        - artifactKind
+        - datasetVersion
+        - featureSchemaVersion
+        - extractorVersion
+        - meanings
+        - acceptanceThreshold
+        - macroF1
+        - perMeaningRecall
+        - evaluatedAt
+        - demoReady
+      properties:
+        modelVersion:
+          type: string
+        artifactKind:
+          type: string
+          enum: [fixture, pilot, full]
+        datasetVersion:
+          type: string
+        featureSchemaVersion:
+          type: string
+        extractorVersion:
+          type: string
+        meanings:
+          type: array
+          minItems: 1
+          maxItems: 10
+          description: Actual meanings supported by the loaded artifact; full demo-ready models contain exactly 10.
+          items:
+            type: string
+        acceptanceThreshold:
+          type: number
+          minimum: 0
+          maximum: 1
+        macroF1:
+          type: [number, 'null']
+          minimum: 0
+          maximum: 1
+        perMeaningRecall:
+          type: [object, 'null']
+          additionalProperties:
+            type: number
+            minimum: 0
+            maximum: 1
+        evaluatedAt:
+          type: [string, 'null']
+          format: date-time
+        demoReady:
+          type: boolean
+          description: True only for a full 10-meaning model that passes every release gate.
+    PredictionResponse:
+      type: object
+      required:
+        - requestId
+        - text
+        - classLabel
+        - confidence
+        - accepted
+        - modelVersion
+        - processingTimeMs
+      properties:
+        requestId:
+          type: string
+          format: uuid
+        text:
+          type: string
+        classLabel:
+          type: [string, 'null']
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+        accepted:
+          type: boolean
+        modelVersion:
+          type: string
+        processingTimeMs:
+          type: integer
+          minimum: 0
+          description: Total server-side processing time in milliseconds.
+        timingsMs:
+          $ref: '#/components/schemas/PredictionTimings'
+        qualityHints:
+          $ref: '#/components/schemas/PredictionQualityHints'
+    PredictionTimings:
+      type: object
+      description: Optional diagnostic breakdown measured by the server; clients must not use it to decide whether a prediction is accepted.
+      required: [decode, extract, infer]
+      properties:
+        decode:
+          type: integer
+          minimum: 0
+        extract:
+          type: integer
+          minimum: 0
+        infer:
+          type: integer
+          minimum: 0
+    PredictionQualityHints:
+      type: object
+      description: Optional non-biometric input-quality signals for UI guidance and diagnostics; no frames or landmarks are returned.
+      required: [handsDetectedRatio, frameCount]
+      properties:
+        handsDetectedRatio:
+          type: number
+          minimum: 0
+          maximum: 1
+        frameCount:
+          type: integer
+          minimum: 1
+    ErrorEnvelope:
+      type: object
+      required: [code, message, requestId]
+      properties:
+        code:
+          type: string
+          enum:
+            - INVALID_REQUEST
+            - UNSUPPORTED_MEDIA_TYPE
+            - CLIP_TOO_LARGE
+            - CLIP_TOO_SHORT
+            - CLIP_TOO_LONG
+            - NO_PERSON_DETECTED
+            - INSUFFICIENT_LANDMARKS
+            - CLIP_DECODE_FAILED
+            - SERVICE_BUSY
+            - MODEL_NOT_READY
+            - PREDICTION_FAILED
+        message:
+          type: string
+        requestId:
+          type: string
+          format: uuid
