@@ -7,6 +7,8 @@ from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
+from visign_api.api.admin import router as admin_router
+from visign_api.api.pilot import router as pilot_router
 from visign_api.api.router import api_v1_router
 from visign_api.config import settings
 from visign_api.domain.errors import (
@@ -156,3 +158,5 @@ async def unhandled_exception_handler(request: Request, exc: Exception):
 
 
 app.include_router(api_v1_router)
+app.include_router(admin_router)
+app.include_router(pilot_router)

@@ -70,7 +70,7 @@ def prepare(args):
     return schema, rows, mapping, config, labels, meanings, p0, audit
 
 
-def train(args):
+def train(args, *, on_epoch=None):
     schema, rows, mapping, config, labels, meanings, p0, audit = prepare(args)
     os.environ.setdefault("CUBLAS_WORKSPACE_CONFIG", ":4096:8")
     seed = int(config["seed"])
@@ -135,6 +135,8 @@ def train(args):
                 "validationLoss": validation_loss,
             }
         )
+        if on_epoch is not None:
+            on_epoch(history[-1])
         if validation_loss < best_loss:
             best_loss = validation_loss
             best_state = {

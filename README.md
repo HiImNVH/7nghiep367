@@ -6,14 +6,18 @@ Phần UX/UI và frontend dùng React, TypeScript và Vite. Mã nguồn nằm tr
 `apps/web/`, API contract nằm trong `contracts/`, bảng nhiệm vụ và bằng chứng
 kiểm tra nằm trong `docs/team/frontend.md`.
 
-## Chạy frontend
+## Mở Admin trong VS Code
+
+Mở repo 7nghiep367 và làm theo [hướng dẫn Admin](admin/train%20model/README.md) để chạy backend và frontend bằng hai terminal PowerShell trong VS Code, train pilot và xem W&B.
+
+## Chạy riêng frontend
 
 Cài Node.js phiên bản 22.12 trở lên, rồi mở terminal tại thư mục repo:
 
 ```powershell
 cd apps/web
-npm ci
-npm run dev
+npm.cmd ci
+npm.cmd run dev
 ```
 
 Mở địa chỉ Vite in ra trong terminal. Frontend mặc định kết nối backend ở

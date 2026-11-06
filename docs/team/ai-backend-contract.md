@@ -11,7 +11,7 @@ Theo xác nhận của Cường trong cuộc trao đổi ngày 01/11/2026, Tín 
 | Video qua HTTP | WebM VP8/VP9, tối đa 10 MiB (10,485,760 bytes); đầu vào MP4 được dùng ở công cụ offline, không mở thêm upload MP4 |
 | Thời lượng | Từ 300 đến 6000 ms, đo từ PTS giải mã, không tin số client gửi. Frontend mặc định dừng ghi ở 5000 ms |
 | Camera | MediaRecorder ghi stream gốc. CSS phản chiếu preview không lật dữ liệu gửi API; pipeline không tự flip video |
-| Schema hiện tại | `visign-xy-32-v0.3-draft`; 21 điểm tay trái, 21 tay phải, pose 11–16, 30 điểm mặt theo đúng thứ tự trong JSON |
+| Schema hiện tại | `visign-xy-32-v0.3`; 21 điểm tay trái, 21 tay phải, pose 11–16, 30 điểm mặt theo đúng thứ tự trong JSON |
 | Tensor | float32 `[32,234]`: 156 giá trị XY rồi 78 validity flags; điểm thiếu đặt XY=0, validity=0; các mask NPZ được ghi rõ trong schema |
 | Chuẩn hóa | Tâm hai vai 11,12; chia khoảng cách vai trong tọa độ pixel có tính tỉ lệ khung hình. Không suy diễn tọa độ tay mất |
 | Lấy mẫu | Tối đa 64 frame theo PTS trải toàn clip, sau đó nội suy 32 bước. Chỉ nội suy khi điểm ở cả hai mẫu lân cận đều hợp lệ |
@@ -56,7 +56,7 @@ Backend đang giới hạn một lượt inference đồng thời; giá trị 3 
 
 ## Phần còn chờ để mở pilot
 
-Hợp đồng kỹ thuật đã được mô tả và kiểm tra bằng code. Schema vẫn giữ DRAFT_PENDING_LEAD_REVIEW: chưa tự đổi APPROVED, vì chưa có review độ giữ được diễn biến ký hiệu sau lấy mẫu, quy ước trái/phải với clip camera đại diện và dữ liệu pilot được duyệt. Khi review hoàn tất, cập nhật trạng thái có căn cứ; nếu thay đổi quy tắc tensor thì tạo version mới, trích lại và train lại. Không đổi schema của artifact đã phát hành.
+Schema v0.3 đã được Cường chốt cho pilot Sốt/Chờ. Nếu thay đổi quy tắc tensor thì tạo version mới, trích lại và train lại. Không đổi schema của artifact đã phát hành.
 
 Quang bàn giao pilot.csv, class map, video approved/verified và split audit. Cường train/evaluate thật rồi giao artifact; Tín chạy preflight và HTTP, Hiển thử camera/result/error/retry; Huy quyết định checkpoint/full và phát hành. Kiểm thử với GRU tổng hợp chỉ chứng minh cơ chế, không chứng minh nhận diện VSL.
 

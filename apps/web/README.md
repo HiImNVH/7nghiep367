@@ -4,14 +4,18 @@ React + TypeScript + Vite, targeting Chromium/Edge. This implements Hiển's fro
 MVP tasks from the plan ZIP updated 2026-10-24. Status/evidence is recorded in
 `../../docs/team/frontend.md`.
 
-## Run
+## Admin trong VS Code
 
-Node.js 22.12+ and npm:
+Để mở Admin và train pilot, theo [hướng dẫn chạy bằng hai terminal VS Code](../../admin/train%20model/README.md).
+
+## Run frontend only
+
+From the repository root in a VS Code PowerShell terminal, with Node.js 22.12+ and npm:
 
 ```powershell
-cd D:\Projects\7nghiep367\apps\web
-npm ci
-npm run dev
+Set-Location apps/web
+npm.cmd ci
+npm.cmd run dev
 ```
 
 Open the URL printed by Vite. Requests to `/api` use Vite's local proxy to

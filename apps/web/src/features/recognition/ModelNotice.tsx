@@ -6,7 +6,7 @@ export function ModelNotice({ model }: { model: ModelInfo }) {
     && model.macroF1 !== null && model.macroF1 >= 0.8 && model.perMeaningRecall !== null
     && model.meanings.every(meaning => (model.perMeaningRecall?.[meaning] ?? -1) >= 0.65);
   const label = model.artifactKind === 'fixture' ? 'Kiểm thử tích hợp · Kết quả tạo sẵn'
-    : model.artifactKind === 'pilot' ? 'Model pilot · Phạm vi giới hạn'
+    : model.artifactKind === 'pilot' ? 'Model pilot đã train · Phạm vi giới hạn'
     : fullReady ? 'Sẵn sàng demo MVP' : 'Model đầy đủ · Chưa sẵn sàng demo';
   return (
     <div className={`model-notice ${fullReady ? 'model-ready' : 'model-limited'}`}>

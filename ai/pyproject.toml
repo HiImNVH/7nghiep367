@@ -8,6 +8,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+tracking = ["wandb==0.31.0"]
 dev = ["pytest", "ruff", "mypy"]
 
 [build-system]

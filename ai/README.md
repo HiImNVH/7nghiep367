@@ -1,7 +1,7 @@
 # ViSign AI
 
 Code cho P3 theo T014–T017, T029, T033–T036, T054, T057–T059, T062 và T065.
-Chạy các lệnh bên dưới từ thư mục gốc `7nghiep367` trên nhánh `Model/Cường`.
+Chạy các lệnh bên dưới từ thư mục gốc 7nghiep367 trong terminal PowerShell của VS Code. Để mở web Admin, train pilot và xem W&B, theo [hướng dẫn Admin](../admin/train%20model/README.md).
 
 ## Môi trường và kiểm thử
 
@@ -35,7 +35,7 @@ Các test clip WebM thật được mở bằng `VISIGN_CHROME_WEBM`, `VISIGN_ED
 
 Lệnh debug offline xuất tensor, tọa độ gốc, mask và report. API gọi trực tiếp `visign_ai.landmarks.pipeline.process_video` và không xuất các file debug.
 
-Schema hiện giữ `DRAFT_PENDING_LEAD_REVIEW`. Nó mô tả bản thử 78 điểm, 32 bước, 234 đặc trưng. Lệnh train và adapter API yêu cầu schema `APPROVED` do nhóm đã chốt. Việc đổi trạng thái cần đi cùng review phiên bản, thứ tự điểm, chuẩn hóa và bundle detector.
+Schema pilot hiện là visign-xy-32-v0.3 (APPROVED), gồm 78 điểm, 32 bước và 234 đặc trưng. Thay đổi thứ tự điểm, chuẩn hóa, lấy mẫu, mask hoặc detector cần một phiên bản schema mới và trích lại dữ liệu.
 
 ## Nhận dữ liệu và trích xuất
 

@@ -290,7 +290,7 @@ export function CameraRecorder({ onClipReady, onClipDiscard, recordingEnabled = 
         <div className="camera-tint" />
         <div className="panel-topbar">
           <div className="brand"><span className="brand-mark"><UiIcon name="hand" /></span><span>ViSign</span><span className="brand-divider" /><span className="brand-description">Ngôn ngữ ký hiệu Việt Nam</span></div>
-          <div className="header-actions"><span className="version-label">Bản thử nghiệm</span><CameraHelp recordingEnabled={recordingEnabled} recognitionEnabled={!!recognition} /></div>
+          <div className="header-actions"><span className="version-label">Bản thử nghiệm</span><a className="workspace-link" href="/admin/train-model">Admin</a><CameraHelp recordingEnabled={recordingEnabled} recognitionEnabled={!!recognition} /></div>
         </div>
         <div className="camera-status-row">
           <span className="workspace-label"><UiIcon name="camera" />Không gian nhận diện</span>
