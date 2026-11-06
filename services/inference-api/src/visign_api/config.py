@@ -1,11 +1,13 @@
 """Application configuration settings (T022)."""
 
+import json
 from pathlib import Path
 from typing import List
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _SERVICE_ROOT = Path(__file__).resolve().parents[2]
+REPO_ROOT = _SERVICE_ROOT.parents[1]
 
 
 class Settings(BaseSettings):
@@ -28,9 +30,14 @@ class Settings(BaseSettings):
         default=str(_SERVICE_ROOT / "tests" / "fixtures" / "model-artifacts" / "fixture"),
         alias="MODEL_ARTIFACT_PATH",
     )
-    # Must equal featureSchemaVersion of every loaded artifact (T037 fail-closed check).
-    # Replace with ai/configs/feature_schema.json once T016 ships the shared schema file.
-    feature_schema_version: str = Field(default="vsl-feature-v1.0", alias="FEATURE_SCHEMA_VERSION")
+    # Every loaded artifact must carry this featureSchemaVersion (T037 fail-closed check).
+    # Source of truth is the shared schema file from visign_ai (T016); FEATURE_SCHEMA_VERSION
+    # overrides it only when the file is not deployed next to the API.
+    feature_schema_path: str = Field(
+        default=str(REPO_ROOT / "ai" / "configs" / "feature_schema.json"),
+        alias="FEATURE_SCHEMA_PATH",
+    )
+    feature_schema_version: str = Field(default="", alias="FEATURE_SCHEMA_VERSION")
 
     # Input clip constraints
     allowed_mime_types: List[str] = [
@@ -62,6 +69,19 @@ class Settings(BaseSettings):
 
     # Temporary directory for clip upload
     temp_dir: str = Field(default="", alias="TEMP_DIR")
+
+    def serving_feature_schema_version(self) -> str:
+        """Explicit FEATURE_SCHEMA_VERSION, else featureSchemaVersion from the shared schema file."""
+        if self.feature_schema_version:
+            return self.feature_schema_version
+        path = Path(self.feature_schema_path)
+        try:
+            version = json.loads(path.read_text(encoding="utf-8-sig"))["featureSchemaVersion"]
+        except (OSError, ValueError, KeyError, TypeError) as e:
+            raise ValueError(f"cannot read featureSchemaVersion from {path}: {e}") from e
+        if not isinstance(version, str) or not version:
+            raise ValueError(f"featureSchemaVersion in {path} must be a non-empty string")
+        return version
 
 
 settings = Settings()

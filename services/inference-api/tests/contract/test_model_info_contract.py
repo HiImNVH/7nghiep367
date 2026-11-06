@@ -57,8 +57,8 @@ def test_get_model_info_fixture_contract(client: TestClient):
     assert data["modelVersion"] == "vsl-fixture-v0.1.0"
     assert data["artifactKind"] == "fixture"
     assert data["datasetVersion"] == "fixture-manifest-v1"
-    assert data["featureSchemaVersion"] == "vsl-feature-v1.0"
-    assert data["extractorVersion"] == "mediapipe-holistic-0.10.14"
+    assert data["featureSchemaVersion"] == "visign-xy-32-v0.3-draft"
+    assert data["extractorVersion"] == "tasks-hand-pose-face-1.1.1-24d9ff64192c8dc3"
     assert isinstance(data["meanings"], list)
     assert len(data["meanings"]) > 0
     assert data["acceptanceThreshold"] == 0.70
@@ -81,8 +81,8 @@ def test_model_metadata_demo_ready_gate_evaluation():
         modelVersion="vsl-full-v1.0.0",
         artifactKind=ArtifactKind.FULL,
         datasetVersion="p0-manifest-hash",
-        featureSchemaVersion="vsl-feature-v1.0",
-        extractorVersion="mediapipe-holistic-0.10.14",
+        featureSchemaVersion="visign-xy-32-v0.3-draft",
+        extractorVersion="tasks-hand-pose-face-1.1.1-24d9ff64192c8dc3",
         meanings=ten_meanings,
         classLabels=ten_meanings,
         acceptanceThreshold=0.70,
@@ -96,8 +96,8 @@ def test_model_metadata_demo_ready_gate_evaluation():
         modelVersion="vsl-pilot-v0.2.0",
         artifactKind=ArtifactKind.PILOT,
         datasetVersion="pilot-manifest",
-        featureSchemaVersion="vsl-feature-v1.0",
-        extractorVersion="mediapipe-holistic-0.10.14",
+        featureSchemaVersion="visign-xy-32-v0.3-draft",
+        extractorVersion="tasks-hand-pose-face-1.1.1-24d9ff64192c8dc3",
         meanings=["XIN_CHAO", "CAM_ON", "THUOC"],
         classLabels=["XIN_CHAO", "CAM_ON", "THUOC"],
         acceptanceThreshold=0.70,
@@ -111,8 +111,8 @@ def test_model_metadata_demo_ready_gate_evaluation():
         modelVersion="vsl-full-low-f1",
         artifactKind=ArtifactKind.FULL,
         datasetVersion="p0-manifest",
-        featureSchemaVersion="vsl-feature-v1.0",
-        extractorVersion="mediapipe-holistic-0.10.14",
+        featureSchemaVersion="visign-xy-32-v0.3-draft",
+        extractorVersion="tasks-hand-pose-face-1.1.1-24d9ff64192c8dc3",
         meanings=ten_meanings,
         classLabels=ten_meanings,
         acceptanceThreshold=0.70,
@@ -128,8 +128,8 @@ def test_model_metadata_demo_ready_gate_evaluation():
         modelVersion="vsl-full-low-recall",
         artifactKind=ArtifactKind.FULL,
         datasetVersion="p0-manifest",
-        featureSchemaVersion="vsl-feature-v1.0",
-        extractorVersion="mediapipe-holistic-0.10.14",
+        featureSchemaVersion="visign-xy-32-v0.3-draft",
+        extractorVersion="tasks-hand-pose-face-1.1.1-24d9ff64192c8dc3",
         meanings=ten_meanings,
         classLabels=ten_meanings,
         acceptanceThreshold=0.70,

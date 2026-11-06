@@ -113,10 +113,11 @@ def validate_artifact_consistency(
     extras: Dict[str, Any],
 ) -> None:
     """Reject artifacts whose schema, class map or display texts cannot be served safely."""
-    if metadata.featureSchemaVersion != settings.feature_schema_version:
+    serving_version = settings.serving_feature_schema_version()
+    if metadata.featureSchemaVersion != serving_version:
         raise ValueError(
             f"featureSchemaVersion '{metadata.featureSchemaVersion}' does not match "
-            f"serving schema '{settings.feature_schema_version}'"
+            f"serving schema '{serving_version}'"
         )
 
     if len(set(metadata.meanings)) != len(metadata.meanings):

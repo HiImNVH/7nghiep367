@@ -1,0 +1,6 @@
+{
+  "_comment": "Test copy of the identity fields of ai/configs/feature_schema.json; keep in sync (see test_feature_schema_source.py).",
+  "featureSchemaVersion": "visign-xy-32-v0.3-draft",
+  "status": "DRAFT_PENDING_LEAD_REVIEW",
+  "extractorVersion": "tasks-hand-pose-face-1.1.1-24d9ff64192c8dc3"
+}

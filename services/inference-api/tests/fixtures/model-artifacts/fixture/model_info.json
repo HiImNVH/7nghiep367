@@ -2,8 +2,8 @@
   "modelVersion": "vsl-fixture-v0.1.0",
   "artifactKind": "fixture",
   "datasetVersion": "fixture-manifest-v1",
-  "featureSchemaVersion": "vsl-feature-v1.0",
-  "extractorVersion": "mediapipe-holistic-0.10.14",
+  "featureSchemaVersion": "visign-xy-32-v0.3-draft",
+  "extractorVersion": "tasks-hand-pose-face-1.1.1-24d9ff64192c8dc3",
   "meanings": [
     "XIN_CHAO",
     "CAM_ON",
