@@ -1,4 +1,5 @@
-"""Unit tests for clip MIME, size, magic-byte and duration validation (T049)."""
+"""Unit tests for clip MIME, size and magic-byte validation (T049).
+Duration limits are enforced by the AI pipeline; see test_gru_predictor.py."""
 
 import pytest
 
@@ -7,7 +8,6 @@ from visign_api.domain.errors import ErrorCode, ViSignApiException
 from visign_api.inference.clip_validator import (
     EBML_MAGIC_BYTES,
     validate_clip_content,
-    validate_clip_duration,
     validate_clip_metadata,
 )
 
@@ -51,22 +51,3 @@ def test_invalid_content_rejected(content, expected_code):
     with pytest.raises(ViSignApiException) as exc_info:
         validate_clip_content(content)
     assert exc_info.value.code == expected_code
-
-
-def test_duration_within_limits_accepted():
-    validate_clip_duration(settings.min_duration_ms)
-    validate_clip_duration(settings.max_duration_ms)
-
-
-@pytest.mark.parametrize(
-    "duration_ms,expected_code,expected_status",
-    [
-        (settings.min_duration_ms - 1, ErrorCode.CLIP_TOO_SHORT, 422),
-        (settings.max_duration_ms + 1, ErrorCode.CLIP_TOO_LONG, 422),
-    ],
-)
-def test_duration_outside_limits_rejected(duration_ms, expected_code, expected_status):
-    with pytest.raises(ViSignApiException) as exc_info:
-        validate_clip_duration(duration_ms)
-    assert exc_info.value.code == expected_code
-    assert exc_info.value.status_code == expected_status

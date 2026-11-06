@@ -1,4 +1,8 @@
-"""Video clip validation for MIME, size, WebM magic bytes, and container integrity (T049)."""
+"""
+Video clip validation for MIME, size, WebM magic bytes, and container integrity (T049).
+Duration (from decoded PTS), person and landmark checks run inside the visign_ai pipeline,
+which the GRU adapter calls with settings.min/max_duration_ms.
+"""
 
 from pathlib import Path
 from typing import Optional
@@ -6,8 +10,6 @@ from visign_api.config import settings
 from visign_api.domain.errors import (
     ClipDecodeFailedException,
     ClipTooLargeException,
-    ClipTooLongException,
-    ClipTooShortException,
     InvalidRequestException,
     UnsupportedMediaTypeException,
 )
@@ -53,17 +55,6 @@ def validate_clip_content(content: bytes) -> None:
         raise ClipDecodeFailedException(
             "Không thể giải mã video. Tệp không chứa WebM EBML header hợp lệ."
         )
-
-
-def validate_clip_duration(duration_ms: int) -> None:
-    """
-    Validate clip duration measured from decoded frame PTS, never from client/container metadata.
-    Called by the pilot/full predictor right after the VideoDecoder step (T015).
-    """
-    if duration_ms < settings.min_duration_ms:
-        raise ClipTooShortException()
-    if duration_ms > settings.max_duration_ms:
-        raise ClipTooLongException()
 
 
 def validate_clip_file(file_path: Path) -> None:
