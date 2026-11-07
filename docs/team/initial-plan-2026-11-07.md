@@ -1,7 +1,9 @@
 # Kế hoạch ban đầu ViSign sau đối chiếu hiện trạng
 
-Ngày chốt: 2026-11-07  
-Nguồn sự thật: `specs/001-vsl-recognition-mvp/spec.md`, `plan.md`, `tasks.md`  
+Ngày chốt: 2026-11-07
+
+Nguồn sự thật: `specs/001-vsl-recognition-mvp/spec.md`, `plan.md`, `tasks.md`
+
 Nguyên tắc: code trên nhánh là bằng chứng tiến độ, không phải task hoàn thành trên `main`.
 
 ## 1. Mục tiêu gần nhất
