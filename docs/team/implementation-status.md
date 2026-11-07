@@ -1,6 +1,6 @@
 # ViSign implementation tracking snapshot
 
-Snapshot date: 2026-11-03
+Snapshot date: 2026-11-07
 Source of truth: `specs/001-vsl-recognition-mvp/tasks.md`
 Scope: Review of remote role branches before application code is merged into `main`
 
@@ -22,20 +22,21 @@ and must be refreshed after each role branch is merged.
 |---|---|---|---|
 | Main requirements and tasks | `main` | This Spec Kit bootstrap commit | Requirements, plans, contracts and backlog installed |
 | Frontend | `frontend` | `c6a1b45` | Code and automated frontend tests exist |
-| Backend | `backend` | `a1217f8` | API code and contract tests exist |
+| Backend | `backend` | `b708c72` | API, GRU artifact adapter and read-only handoff checker exist; supplied backend report says 119 tests passed |
 | Integrated frontend/backend | `integration` | `7f3ae0d` | Integration branch exists, not merged into main |
 | AI and model integration | `Model/Cường` | `985e871` | Training/evaluation pipeline exists; no approved VSL model |
+| Internal admin/train tool | `admin/train-model` | `73825c7` | Clip inspection, pilot job UI/API and W&B history code exist; not merged or accepted |
 | Data | `data` | `bcc97ca` | Contains a video archive only; no approved manifests or split evidence |
 
 ## Member status
 
 | Person | Owner | Tasks | Status | Evidence and next gate |
 |---|---|---|---|---|
-| P1 | Huy | T032, T047, T067–T071 | PARTIAL | Browser fixture tests exist, but full frontend→API→model E2E, verification report, demo rehearsal and usability report remain open. |
-| P2 | Tín | T019–T026, T030, T037–T038, T044–T045, T048–T050, T055, T060, T064, T066, T072–T073 | BRANCH / TODO | Backend tests and fixture API exist on role/integration branches. T072–T073 for stable 404/405/307 handling are new TODO items. Merge and rerun tests on main. |
-| P3 | Cường | T014–T017, T029, T033–T036, T054, T057–T059, T062, T065 | PARTIAL | Decoder, MediaPipe, GRU, evaluation and artifact tooling exist. Feature schema approval, reviewed browser clips, approved manifest, trained VSL weights and real quality/latency evidence remain missing. |
-| P4 | Quang | T008–T013, T018, T056, T061 | TODO / HISTORICAL | Earlier local workspace marked T008–T012 complete, but remote branches do not contain their manifest/schema evidence. Pilot/full manifests, signer-held-out split audit and dataset card remain open. |
-| P5 | Hiển | T027–T028, T031, T039–T043, T046, T051–T053, T074–T075; M1 T063 | BRANCH / TODO | Frontend implementation, unit tests, browser tests and accessibility evidence exist on the frontend/model branches. T074–T075 HTTP compatibility placeholders are new TODO items. |
+| P1 | Huy | T032, T047, T067–T071, T084 | PARTIAL | Browser fixture tests exist. Full browser→API→model E2E, verification/demo/usability reports and admin scope acceptance remain open. |
+| P2 | Tín | Backend/API tasks plus T072–T073, T078–T080 | BRANCH / TODO | Backend report maps 14/16 backend requirements as implemented at `b708c72`; 404/405/no-store work and admin contract/security tests remain. Merge and rerun on main. |
+| P3 | Cường | AI/training/evaluation tasks plus T083 support | PARTIAL | Pipeline and training tools exist; pilot Sốt-Chờ was reported at Macro-F1 0.333 and is not release evidence. Full 10-meaning model and gate evidence remain. |
+| P4 | Quang | T008–T013, T018, T056, T061, T076–T077 | PARTIAL / TODO | Supplied current-state document reports 42 development clips and a 6-clip Sốt-Chờ pilot. Official full manifest/coverage/signer split evidence remains open. |
+| P5 | Hiển | Frontend tasks plus T063, T074–T075, T081–T082 | BRANCH / TODO | Recognition UI/tests and admin UI exist on branches. HTTP placeholders, admin tests/client cleanup and real webcam acceptance remain. |
 
 ## Verified test evidence before main integration
 
@@ -47,11 +48,15 @@ and must be refreshed after each role branch is merged.
 These results show branch readiness, not release completion. Browser tests that
 mock API responses do not replace full application E2E acceptance.
 
+Additional supplied evidence dated 2026-11-06/07 has not yet been reproduced on `main`: backend
+119-test claim, frontend handoff 52 unit/component + 4 browser tests, pilot model
+`vsl-pilot-d69ea4eb994f`, and W&B run evidence. These remain `BRANCH/PARTIAL` until merged and rerun.
+
 ## Immediate integration order
 
-1. Merge this Spec Kit/source-of-truth bootstrap into `main`.
-2. Reconcile and merge frontend/backend integration code with task IDs in the PR.
-3. Merge AI pipeline code after schema and artifact boundaries are reviewed.
-4. Produce approved pilot/full manifests and signer-held-out split evidence.
-5. Train and evaluate a real pilot artifact, then run unskipped E2E and latency checks.
-6. Update this snapshot and mark tasks complete only after evidence is on `main`.
+1. Finish T072–T075 and merge backend/frontend foundation in reviewable PRs with task IDs.
+2. Merge AI shared pipeline after schema v0.3 and train-serving parity review.
+3. Complete T076 pilot audit; keep reported Sốt-Chờ result explicitly non-release.
+4. Complete T077 full manifest and signer-held-out split; then train/evaluate full 10 meanings.
+5. Review/harden admin tool through T078–T084 without coupling it to public `/api/v1`.
+6. Run quickstart/E2E/latency/usability on `main`; only then close tasks and approve demo.

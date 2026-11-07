@@ -3,7 +3,8 @@
 **Input**: Design documents from `specs/001-vsl-recognition-mvp/`
 
 **Prerequisites**: [plan.md](plan.md), [spec.md](spec.md), [research.md](research.md),
-[data-model.md](data-model.md), [contracts/openapi.yaml](contracts/openapi.yaml)
+[data-model.md](data-model.md), [contracts/openapi.yaml](contracts/openapi.yaml),
+[contracts/admin-tools.md](contracts/admin-tools.md)
 
 **Tests**: Bắt buộc theo hiến pháp. Trong mỗi story, viết test và xác nhận test thất bại trước khi
 thực hiện phần code tương ứng.
@@ -13,19 +14,20 @@ thực hiện phần code tương ứng.
 **Integration tracking**: [docs/team/implementation-status.md](../../docs/team/implementation-status.md)
 phân biệt evidence đang ở role branch với phần đã được review và merge vào `main`.
 
-**Baseline reset 2026-11-03**: T001–T012 từng được đánh dấu hoàn thành trong workspace lịch sử nhưng
-được mở lại khi đưa Spec Kit lên `main`, vì implementation/evidence chưa hiện diện trên `main`. Lịch sử
-và branch evidence được giữ trong integration tracking; checkbox chỉ đóng sau khi merge và review.
+**Baseline review 2026-11-07**: Code đã có trên các nhánh `backend`, `frontend`, `Model/Cường` và
+`admin/train-model`, nhưng application code chưa hiện diện trên `main`. Lịch sử và branch evidence
+được giữ trong integration tracking; checkbox chỉ đóng sau khi review, merge và chạy lại test trên
+`main`. Kế hoạch tích hợp ban đầu: [docs/team/initial-plan-2026-11-07.md](../../docs/team/initial-plan-2026-11-07.md).
 
 ## Phân công dự kiến
 
 | Mã người | Thành viên hiện tại | Vai trò chính | Task chịu trách nhiệm chính |
 |---|---|---|---|
-| **P1** | **Huy** | Quản lý dự án, task, checkpoint, nghiệm thu và demo | T032, T047, T067–T071 |
-| **P2** | **Tín** | Backend, API và tích hợp predictor | T019–T026, T030, T037–T038, T044–T045, T048–T050, T055, T060, T064, T066, T072–T073 |
-| **P3** | **Cường** | MediaPipe pipeline, training model và model evaluation | T014–T017, T029, T033–T036, T054, T057–T059, T062, T065 |
-| **P4** | **Quang** | Data crawler, data analysis, manifest và split | T008–T013, T018, T056, T061 |
-| **P5** | **Hiển** | UX/UI và frontend | T027–T028, T031, T039–T043, T046, T051–T053, T074–T075; M1: T063 |
+| **P1** | **Huy** | Quản lý dự án, task, checkpoint, nghiệm thu và demo | T032, T047, T067–T071, T084 |
+| **P2** | **Tín** | Backend, API và tích hợp predictor | T019–T026, T030, T037–T038, T044–T045, T048–T050, T055, T060, T064, T066, T072–T073, T078–T080 |
+| **P3** | **Cường** | MediaPipe pipeline, training model và model evaluation | T014–T017, T029, T033–T036, T054, T057–T059, T062, T065, T083 |
+| **P4** | **Quang** | Data crawler, data analysis, manifest và split | T008–T013, T018, T056, T061, T076–T077 |
+| **P5** | **Hiển** | UX/UI và frontend | T027–T028, T031, T039–T043, T046, T051–T053, T063, T074–T075, T081–T082 |
 
 **Quy ước ownership**:
 
@@ -73,14 +75,13 @@ Không dùng mã `VS-*` từ phản hồi senior làm backlog thứ hai. `tasks.
 | Fake-camera E2E | T032, T047 | Person P1/Huy; Person P5/Hiển review UX |
 | Request correlation + optional diagnostics | T020, T023, T026–T027, T030, T038, T040, T045 | Person P2/Tín; Person P5/Hiển consumer |
 
-**Milestone nội bộ cho T013** *(không tạo thêm owner hoặc task ID)*:
+**Milestone dữ liệu đã được tách lại**:
 
 1. Quang đã đóng băng danh mục 10 Meaning tại `data/manifests/p0-meanings.csv`.
-2. Quang hoàn tất inventory nguồn và license audit cho từng video.
-3. Quang chốt tối đa 3 Meaning có coverage tốt nhất vào `pilot.csv` để bàn giao sớm cho Cường.
-4. Quang tiếp tục lọc, bổ sung và phân tích coverage cho đủ 10 Meaning P0.
-5. Quang đóng băng sample manifest `p0.csv`; Huy xác nhận checkpoint dữ liệu, Cường mới chạy full training.
-6. T013 chỉ được đánh dấu hoàn thành ở milestone 5; milestone 3 đủ để kích hoạt pilot fallback.
+2. T013 chỉ quản lý vocabulary registry; không còn gộp sample manifest vào cùng một checkbox.
+3. T076 audit bản phát triển/pilot (hiện được báo cáo 42 clip, pilot Sốt-Chờ 6 clip).
+4. T077 hoàn thiện sample manifest full 10 nghĩa, coverage và signer-held-out split.
+5. Huy xác nhận checkpoint T077 trước khi Cường chạy full training; T076 chỉ mở pilot fallback.
 
 ## Format: `[ID] [P?] [Story] Description`
 
@@ -116,7 +117,7 @@ track MAY bắt đầu khi T019–T028 ổn định và không được trình b
 - [ ] T010 [P] Định nghĩa schema hàng manifest gồm `sampleId` duy nhất, `recordingSessionId` bắt buộc, `licenseStatus`, `verificationStatus` và split tại `ai/src/visign_ai/dataset/manifest_schema.py`
 - [ ] T011 [P] Viết unit tests cho duplicate ID, license không approved, rejected sample và signer/session leakage tại `ai/tests/dataset/test_manifest_validation.py`
 - [ ] T012 Cài manifest validator và báo cáo coverage theo class/signer tại `ai/src/visign_ai/dataset/validate_manifest.py`
-- [ ] T013 Dùng danh mục đã chốt tại `data/manifests/p0-meanings.csv`, tạo sớm `data/manifests/pilot.csv` với tối đa 3 Meaning có video đã duyệt rồi hoàn thiện sample manifest `data/manifests/p0.csv` phủ đúng 10 Meaning P0 sau audit raw material
+- [ ] T013 Duy trì danh mục đúng 10 Meaning P0, display text/category/priority và invariant không trùng tại `data/manifests/p0-meanings.csv`
 - [ ] T014 [P] Viết decoder/extractor tests cho WebM Chrome/Edge fixture, PTS tăng dần, corrupt clip, output shape, missing mask và golden clip→tensor parity tại `ai/tests/landmarks/test_video_pipeline.py`
 - [ ] T015 Cài `VideoDecoder` dùng PyAV sau spike gate và MediaPipe video adapter với pinned `extractorVersion` tại `ai/src/visign_ai/landmarks/video_decoder.py` và `ai/src/visign_ai/landmarks/holistic_extractor.py`
 - [ ] T016 Cài versioned `feature_schema.json`, chuẩn hóa tọa độ, resampling và missing-landmark mask dùng chung train/API tại `ai/src/visign_ai/landmarks/sequence_transform.py` và `ai/configs/feature_schema.json`
@@ -230,6 +231,7 @@ provenance và `demoReady` đúng gate.
 - [ ] T064 [P] Thêm integration test camera clip → cleanup → predictor → response cho fixture/pilot/full và artifact swap tại `tests/integration/test_prediction_pipeline.py`
 - [ ] T065 Chạy performance benchmark và ghi p50/p95 processing time trên laptop demo tại `ai/src/visign_ai/evaluation/benchmark_inference.py` và `docs/model-card.md`
 - [ ] T066 Audit privacy để chứng minh không có video/frame/PII trong log hoặc artifact tại `tests/integration/test_prediction_privacy.py`
+- [ ] T063 [P] Chạy accessibility audit cho keyboard, focus, status announcements và camera labels tại `apps/web/tests/accessibility/recognition-accessibility.spec.ts`, lưu kết quả trong `docs/verification-report.md`
 - [ ] T067 Chạy toàn bộ kịch bản gồm fallback/swap/rollback trong `specs/001-vsl-recognition-mvp/quickstart.md` và lưu kết quả vào `docs/verification-report.md`
 - [ ] T068 [P] Viết demo script full và kịch bản pilot giới hạn không tuyên bố demo-ready tại `docs/demo-script.md`
 - [ ] T069 [P] Viết hướng dẫn cài đặt, chạy local, artifact switching/rollback, cấu trúc project và giới hạn MVP tại `README.md`
@@ -257,15 +259,47 @@ kiểm tra stable Vietnamese copy, không auto-resubmit và không lộ raw serv
 
 ---
 
+## Phase 8: User Story 3 Data Completion Follow-up
+
+**Goal**: Tách bằng chứng pilot khỏi manifest full để không dùng 42 clip phát triển hoặc 6 clip
+Sốt-Chờ như bằng chứng phát hành 10 nghĩa.
+
+**Independent Test**: Chạy manifest validator và split audit; pilot report chỉ công bố phạm vi pilot,
+còn full manifest có đúng 10 nghĩa, nguồn/quyền, signer coverage và không leakage.
+
+- [ ] T076 [P] [US3] Audit bản bàn giao phát triển/pilot, ghi hash/source/license/signer/split và accepted/rejected coverage vào `data/manifests/pilot.csv` và `docs/dataset-card.md`
+- [ ] T077 [US3] Hoàn thiện manifest full đúng 10 nghĩa, coverage meaning×signer và signer-held-out split không leakage tại `data/manifests/p0.csv` và `docs/dataset-card.md`
+
+**Checkpoint**: T076 chỉ mở pilot; full training/release gate chỉ mở sau T077 và T056.
+
+---
+
+## Phase 9: User Story 4 - Công cụ Admin/train-model nội bộ (Priority: P2)
+
+**Goal**: Hợp nhất công cụ đã có trên `admin/train-model` thành luồng nội bộ opt-in, có contract,
+test bảo mật/cleanup/concurrency và không ảnh hưởng public `/api/v1`.
+
+**Independent Test**: Bật/tắt token, inspect clip, chạy preflight→train pilot, thử tạo job song song,
+đọc history/W&B evidence và xác nhận pilot vẫn `demoReady=false`.
+
+- [ ] T078 [P] [US4] Viết backend tests cho disabled 404, invalid-token 401, inspect byte/concurrency limit, cleanup và single-active-pilot-job tại `services/inference-api/tests/contract/test_admin_tools_contract.py`
+- [ ] T079 [US4] Chuẩn hóa opt-in admin config, sanitized errors, temporary inspect lifecycle và worker/job locking tại `services/inference-api/src/visign_api/api/admin.py`, `services/inference-api/src/visign_api/api/pilot.py` và `services/inference-api/src/visign_api/config.py`
+- [ ] T080 [US4] Đồng bộ response models và endpoint behavior với `specs/001-vsl-recognition-mvp/contracts/admin-tools.md` tại `services/inference-api/src/visign_api/api/admin.py` và `services/inference-api/src/visign_api/api/pilot.py`
+- [ ] T081 [P] [US4] Viết frontend tests cho token form, inspect, preflight, train, active-job conflict, history và W&B online/offline tại `apps/web/tests/admin/admin-training.test.tsx`
+- [ ] T082 [US4] Tích hợp route `/admin/train-model`, typed admin client và stable Vietnamese states tại `apps/web/src/features/admin/AdminTraining.tsx`, `apps/web/src/features/admin/PilotPanel.tsx` và `apps/web/src/services/adminApi.ts`
+- [ ] T083 [US4] Chạy pilot Sốt-Chờ từ bản bàn giao đã audit và ghi dataset/run ID, sample counts, metrics, W&B evidence cùng `demoReady=false` tại `docs/pilot-report.md`
+- [ ] T084 [US4] Review ranh giới user/admin, secret handling, retention và release-claim checklist; ghi quyết định nghiệm thu tại `docs/admin-acceptance.md`
+
+**Checkpoint**: Công cụ admin có thể merge độc lập; không chặn user MVP và không được dùng để bỏ qua
+T077/full release gate.
+
+---
+
 ## M1 Candidates — Không thuộc MVP commitment
 
 Các mục dưới đây chỉ được mở khi Huy ghi trigger, owner và acceptance evidence. Chúng không chặn
 `demoReady`, không nằm trên critical path và không được tính vào số task MVP còn lại.
 
-- [ ] T063 [P] Chạy accessibility audit chuyên sâu cho keyboard, focus, status announcements **[M1 candidate]**
-  và camera labels trong `apps/web/tests/accessibility/recognition-accessibility.spec.ts`. **Trigger**:
-  MVP camera flow ổn định hoặc có yêu cầu nghiệm thu accessibility riêng. Basic labels và semantic
-  states vẫn thuộc T028/T039–T053 của MVP.
 - **M1-API-01 [P]**: Tự động sinh và kiểm tra drift TypeScript API types bằng `openapi-typescript` từ
   `specs/001-vsl-recognition-mvp/contracts/openapi.yaml`. **Trigger**: contract thay đổi thường xuyên,
   có client thứ hai hoặc lỗi drift thủ công xuất hiện. T027 vẫn cung cấp type tối thiểu cho MVP.
@@ -294,6 +328,8 @@ ONNX, DVC/MLflow, cloud và mở rộng vocabulary tiếp tục chỉ là decisi
 - **US2**: Phụ thuộc prediction states/API shell của Phase 2; có thể bắt đầu song song phần lớn với US1.
 - **US3**: Phụ thuộc manifest/split/model metadata của Phase 2; evaluation có thể song song với UI US1.
 - **Phase 6**: Phụ thuộc các story được chọn cho demo; T070 phụ thuộc toàn bộ cổng bắt buộc.
+- **Phase 8**: T076 có thể chạy từ bản bàn giao pilot; T077 phụ thuộc inventory/license/signer audit.
+- **Phase 9 / US4**: Có thể review/hợp nhất song song sau foundation; T083 phụ thuộc T076 và T078–T082.
 
 ### User Story Dependencies
 
@@ -301,11 +337,13 @@ ONNX, DVC/MLflow, cloud và mở rộng vocabulary tiếp tục chỉ là decisi
 Setup -> Foundation -> US1 -> Integration/Polish
                     \-> US2 -/
                     \-> US3 -/
+                    \-> US4 (internal, non-release)
 ```
 
 - **US1** không phụ thuộc data/full training để chạy happy path với fixture.
 - **US2** dùng endpoint và state model chung nhưng kiểm thử được độc lập bằng low-confidence fixture.
 - **US3** dùng model artifact chung nhưng kiểm thử được độc lập bằng metrics fixture.
+- **US4** dùng AI/data pipeline nhưng có contract/auth riêng; không phụ thuộc để user MVP chạy.
 - Fixture/pilot/full dùng cùng contract; nâng cấp hoặc rollback artifact không tạo một user story hay
   frontend branch riêng.
 
@@ -315,10 +353,11 @@ Setup -> Foundation -> US1 -> Integration/Polish
 - T009–T011, T014, T019–T021, T025, T027–T028 sửa các vùng độc lập.
 - Sau integration foundation, Tín làm T030/T037–T038, Hiển làm T031/T039–T043 và Huy làm T032 bằng
   fixture; không chờ Quang hoặc Cường hoàn thành full track.
-- Quang làm T013/T018/T056/T061 trong khi Cường làm T014–T017 rồi T029/T033–T036/T054/T057–T059.
+- Quang làm T013/T018/T056/T061/T076–T077 trong khi Cường làm T014–T017 rồi T029/T033–T036/T054/T057–T059.
 - Trong US2, Tín làm T044–T045/T048–T050, Hiển làm T046/T051–T053 và Huy làm T047.
 - US2 tests T044–T047 và US3 tests T054–T056 có thể chạy song song.
-- T061–T062 và T068–T069 là các tài liệu độc lập sau khi contract ổn định; T063 chỉ mở theo trigger M1.
+- T061–T063 và T068–T069 là các kiểm tra/tài liệu độc lập sau khi contract ổn định.
+- Tín làm T078–T080, Hiển làm T081–T082; Cường/Quang cung cấp input cho T083 và Huy review T084.
 
 ## Parallel Example: User Story 1
 
@@ -336,9 +375,9 @@ Quang:    T013 pilot subset -> T018, tiếp tục hoàn thiện full manifest
 
 1. Hoàn thành integration foundation và dùng fixture cho camera → API → UI, kể cả US2 fail-closed.
 2. Chạy M0 decoder/extractor/schema gate và khóa golden clip→tensor parity trên laptop demo.
-3. Quang bàn giao pilot subset tối đa 3 meanings; Cường train/evaluate pilot bằng đúng pipeline full.
+3. Quang hoàn thành T076 cho pilot subset; Cường train/evaluate pilot bằng đúng pipeline full.
 4. Tín đổi artifact qua `MODEL_ARTIFACT_PATH`; Hiển xác nhận model-info/pilot notice, Huy chạy smoke.
-5. Quang hoàn thiện signer-held-out 10-meaning manifest/split; Cường train/evaluate full và ghi release metadata.
+5. Quang hoàn thành T077 signer-held-out 10-meaning manifest/split; Cường train/evaluate full và ghi release metadata.
 6. Huy chỉ mở candidate M1 khi trigger/evidence được ghi; M2 nằm ngoài MVP commitment.
 7. Chỉ full model đạt gate mới được Huy duyệt `demoReady=true`; nếu lỗi thì rollback artifact trước.
 
@@ -366,5 +405,5 @@ Quang:    T013 pilot subset -> T018, tiếp tục hoàn thiện full manifest
 - Không commit raw video, model binary hoặc dữ liệu không rõ quyền sử dụng.
 - Không mở rộng lên 30 từ trước khi 10 từ P0 đạt cổng chất lượng.
 - M1/M2 trong `plan.md` là decision backlog, không phải checkbox cam kết; chỉ `T*` trong file này là task.
-- Ngoại lệ có chủ đích: T063 được giữ mã lịch sử nhưng đặt dưới M1, nên không tính vào backlog MVP.
-- Không commit thay đổi nếu người dùng chưa yêu cầu.
+- T063 được giữ mã lịch sử nhưng chuyển thành kiểm tra accessibility trong Phase 6 vì branch đã có
+  test và yêu cầu frontend hiện trạng coi đây là phần cần nghiệm thu.

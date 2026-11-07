@@ -135,6 +135,26 @@ Expected:
 - Low confidence returns HTTP 200 with `accepted=false` and “Không nhận diện được”.
 - Temporary camera clips are deleted on success and every failure path.
 
+## Scenario 4A: Validate the opt-in admin tool
+
+Set a local token and point the pilot worker at an approved handoff directory. Do not commit either
+value or raw video.
+
+```powershell
+$env:VISIGN_ADMIN_TOKEN = '<local-token>'
+$env:VISIGN_PILOT_DATA = '<approved-handoff-directory>'
+```
+
+Expected:
+
+- Without `VISIGN_ADMIN_TOKEN`, admin endpoints behave as disabled; an invalid bearer token is denied.
+- Clip inspection enforces its size/concurrency limit and deletes temporary input/output on both
+  success and failure after the response lifecycle ends.
+- Pilot preflight verifies manifest, clip hashes, schema/tensor compatibility and class coverage.
+- A second prepare/train request is rejected while one run is active.
+- History exposes run status, metrics and W&B online/offline evidence without exposing tokens.
+- A completed pilot remains `demoReady=false`; it does not replace Scenario 3 full-model gates.
+
 ## Scenario 5: Run the local product
 
 Terminal 1:

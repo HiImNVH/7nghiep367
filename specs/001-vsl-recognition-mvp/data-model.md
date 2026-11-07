@@ -165,3 +165,32 @@ frame/landmark và không được persist. Lỗi dùng `ErrorEnvelope` riêng t
 | `code` | enum | yes | Stable code từ contract |
 | `message` | string | yes | Thông báo tiếng Việt cho người dùng ViSign |
 | `requestId` | UUID | yes | Dùng đối chiếu log |
+
+## TrainingRun
+
+Trạng thái một lần preflight/train/evaluate nội bộ; không phải prediction history của người dùng.
+
+| Field | Type | Required | Validation |
+|------|------|----------|------------|
+| `runId` | string | yes | ID ngẫu nhiên, không chứa tên người hoặc secret |
+| `phase` | enum | yes | `idle`, `preparing`, `ready`, `training`, `evaluating`, `complete`, `failed` |
+| `datasetVersion` | string | yes sau preflight | Hash/tag manifest đã kiểm tra |
+| `featureSchemaVersion` | string | yes sau preflight | Phải khớp schema phục vụ |
+| `sampleTotal` | integer | yes | ≥0 |
+| `accepted` | integer | yes | Trong `[0, sampleTotal]` |
+| `epoch` | integer/null | no | Không vượt `epochs` |
+| `epochs` | integer/null | no | >0 khi train |
+| `metrics` | object/null | no | Accuracy/Macro-F1 của run; không tự quyết định `demoReady` |
+| `wandbRunId` | string/null | no | ID online/offline, không chứa API key |
+| `updatedAt` | datetime | yes | Mốc cập nhật trạng thái gần nhất |
+| `error` | string/null | no | Thông báo đã lọc, không có stack trace/path nhạy cảm |
+
+**State transitions**:
+
+```text
+idle -> preparing -> ready -> training -> evaluating -> complete
+                     \-------------------------------> failed
+```
+
+Chỉ một TrainingRun được ở `preparing|training|evaluating` tại một thời điểm. Lịch sử run được phép
+lưu cục bộ vì không chứa video dự đoán người dùng; clip dùng cho inspect phải bị xóa sau response/lỗi.

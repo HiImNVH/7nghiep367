@@ -1,6 +1,6 @@
 # Implementation Plan: ViSign VSL Recognition MVP
 
-**Branch**: `001-vsl-recognition-mvp` | **Date**: 2026-10-19 | **Updated**: 2026-10-24 | **Spec**: [spec.md](spec.md)
+**Branch**: `001-vsl-recognition-mvp` | **Date**: 2026-10-19 | **Updated**: 2026-11-07 | **Spec**: [spec.md](spec.md)
 
 **Input**: Feature specification from `specs/001-vsl-recognition-mvp/spec.md`
 
@@ -11,6 +11,31 @@ kết thúc, sau đó trả chữ tiếng Việt, độ tin cậy và trạng th
 cho huấn luyện và đánh giá. Pipeline trích xuất landmark bàn tay, tư thế và khuôn mặt bằng MediaPipe,
 chuẩn hóa chuỗi và phân loại bằng GRU. Một web app React gửi đoạn camera ngắn đến FastAPI; API xử lý
 tạm thời trong bộ nhớ/thư mục tạm, trả kết quả rồi xóa đầu vào.
+
+## Baseline triển khai và kế hoạch hợp nhất 2026-11-07
+
+`main` hiện là nguồn sự thật cho Spec Kit nhưng chưa chứa application code. Code đã có trên các nhánh
+vai trò phải được review, merge và chạy lại kiểm thử trước khi checkbox trong `tasks.md` được đóng.
+
+| Track | Evidence hiện có | Đánh giá | Bước kế tiếp |
+|---|---|---|---|
+| Backend | `backend@b708c72`; tài liệu bàn giao báo 119 test đạt | API, artifact adapter và handoff checker đã có; BE-15/BE-16 còn thiếu | Hoàn thành T072-T073, review và merge lên `main` |
+| Frontend | `frontend@c6a1b45` và code tích hợp trên `admin/train-model` | Camera/result/error flow và automated tests đã có | Hoàn thành T074-T075, kiểm tra webcam thật rồi merge |
+| AI/model | `Model/Cường@985e871`, `admin/train-model@73825c7` | MediaPipe/GRU/evaluation và pilot Sốt-Chờ đã chạy; pilot Macro-F1 được báo cáo 0.333 | Giữ pilot là integration evidence; hoàn thiện dữ liệu và train full 10 nghĩa |
+| Data | Bản phát triển được báo cáo có 42 clip; pilot có 6 clip Sốt-Chờ | Chưa có manifest full chính thức đủ coverage/signer split | Tách registry, pilot audit và full manifest thành task độc lập |
+| Admin | `/admin/train-model`, API inspect/pilot và W&B history có trên nhánh | Công cụ nội bộ hữu ích nhưng chưa có contract/test gate chính thức trên `main` | Chuẩn hóa contract, auth/cleanup/concurrency tests và nghiệm thu riêng |
+
+Thứ tự triển khai ban đầu:
+
+1. Hợp nhất backend nền và frontend nền theo từng PR nhỏ, gắn task ID và test evidence.
+2. Đóng HTTP compatibility gap T072-T075 trước khi chạy E2E tích hợp.
+3. Hợp nhất AI shared pipeline, khóa schema v0.3 và kiểm tra train-serving parity.
+4. Quang hoàn thành pilot manifest audit rồi full manifest 10 nghĩa; Cường train/evaluate full.
+5. Tích hợp công cụ admin như một track nội bộ có token opt-in, không chặn luồng user MVP.
+6. Chạy quickstart trên laptop demo; Huy chỉ duyệt phát hành khi full model và toàn bộ gate đạt.
+
+Kế hoạch điều phối theo tuần/checkpoint nằm tại
+[docs/team/initial-plan-2026-11-07.md](../../docs/team/initial-plan-2026-11-07.md).
 
 ## Technical Context
 
@@ -50,6 +75,10 @@ API và tích hợp predictor; P3/Cường phụ trách MediaPipe pipeline, GRU 
 benchmark; P4/Quang phụ trách data crawling, data analysis, manifest và split; P5/Hiển phụ trách
 UX/UI và frontend. P1–P5 là mã người, không phải độ ưu tiên. Mỗi task có một owner theo chuyên môn;
 các điểm giao contract có reviewer được ghi trong `tasks.md`.
+
+**Internal Tooling**: Trang `/admin/train-model` và `/api/admin/*` là công cụ cục bộ opt-in cho kiểm
+tra clip, preflight, pilot training và history. Công cụ này không thuộc public user journey, không làm
+thay đổi OpenAPI `/api/v1`, và không có quyền tự nâng pilot thành model phát hành.
 
 ## Quy ước mã không nhập nhằng
 
@@ -164,7 +193,7 @@ model-info, prediction smoke test. Video người dùng vẫn phải bị xóa �
 | An toàn và trung thực | API có `accepted`; UI có “Không nhận diện được” và disclaimer | PASS |
 | Nguồn gốc dữ liệu | Manifest bắt buộc source, license, region, verified, signer/session | PASS |
 | Chất lượng đo được | Split theo người, macro-F1, per-class recall, confusion matrix, latency | PASS |
-| Quyền riêng tư | Request video chỉ tồn tại tạm thời và bị xóa sau xử lý | PASS |
+| Quyền riêng tư | Request video chỉ tồn tại tạm thời và bị xóa sau xử lý; admin inspect cũng cleanup sau response/lỗi | PASS |
 | MVP chạy xuyên suốt | Chỉ 10 từ, camera → API → model → chữ; candidate M1/M2 không tự vào sprint | PASS |
 | Kiểm thử bắt buộc | Unit, contract, integration, E2E và model evaluation đều có cổng | PASS |
 | Fallback không gây hiểu nhầm | Fixture/pilot luôn `demoReady=false`; UI công bố đúng phạm vi | PASS |
@@ -195,6 +224,7 @@ apps/
 └── web/
     ├── src/
     │   ├── components/
+    │   ├── features/admin/
     │   ├── features/recognition/
     │   ├── services/
     │   └── types/
@@ -204,6 +234,8 @@ services/
 └── inference-api/
     ├── src/visign_api/
     │   ├── api/
+    │   │   ├── admin.py
+    │   │   └── pilot.py
     │   ├── domain/
     │   ├── inference/
     │   └── main.py
@@ -229,6 +261,11 @@ tests/
 ├── contract/
 ├── integration/
 └── e2e/
+
+admin/
+└── train model/
+    ├── inspect_video.py
+    └── pilot_worker.py
 
 docs/
 ├── dataset-card.md
@@ -259,6 +296,8 @@ Các quyết định và phương án bị loại được ghi trong [research.m
 - [contracts/openapi.yaml](contracts/openapi.yaml) định nghĩa `GET /api/v1/health`,
   `GET /api/v1/model-info` và `POST /api/v1/predictions`, gồm request correlation header, timing breakdown,
   input-quality hints và stable error contract. Endpoint landmark JSON vẫn thuộc M2 và không nằm trong MVP.
+- [contracts/admin-tools.md](contracts/admin-tools.md) chốt ranh giới công cụ nội bộ, auth opt-in,
+  cleanup, single-active-job và trạng thái run; đây không phải public API.
 - [quickstart.md](quickstart.md) định nghĩa các kịch bản kiểm chứng từ dữ liệu đến demo camera.
 
 ### Post-design Constitution Check

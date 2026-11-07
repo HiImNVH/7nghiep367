@@ -94,6 +94,29 @@ liệu, phiên bản mô hình, chỉ số đánh giá và ngày đánh giá.
    **Then** hệ thống có thể dùng fixture hoặc pilot model qua cùng contract, công bố đúng tập ý nghĩa
    đang hỗ trợ và luôn giữ `demoReady=false` cho đến khi full model vượt qua mọi quality gate.
 
+### User Story 4 - Kiểm tra dữ liệu và chạy pilot nội bộ (Priority: P2)
+
+Thành viên nhóm có quyền có thể kiểm tra clip/landmark, kiểm tra bản bàn giao dữ liệu, chạy một job
+pilot GRU và xem lại lịch sử hoặc liên kết W&B mà không đưa công cụ này vào luồng người dùng.
+
+**Why this priority**: Công cụ đã có trên nhánh tích hợp và giúp lặp nhanh pipeline dữ liệu-model,
+nhưng không được trở thành đường tắt bỏ qua audit dữ liệu hoặc quality gate của bản full.
+
+**Independent Test**: Bật công cụ bằng mã admin cục bộ, kiểm tra một clip, chạy preflight rồi train
+pilot trên bộ Sốt-Chờ; xác nhận chỉ một job hoạt động, có trạng thái/báo cáo, và kết quả vẫn
+`demoReady=false`.
+
+**Acceptance Scenarios**:
+
+1. **Given** công cụ admin chưa được bật hoặc mã truy cập sai, **When** gọi API nội bộ, **Then** hệ
+   thống từ chối mà không lộ token, đường dẫn nhạy cảm hoặc stack trace.
+2. **Given** bản bàn giao pilot hợp lệ, **When** nhóm chạy preflight, **Then** hệ thống kiểm tra hash,
+   manifest, schema, tensor và coverage trước khi cho phép train.
+3. **Given** một job đang chuẩn bị, train hoặc đánh giá, **When** yêu cầu tạo job khác, **Then** hệ
+   thống từ chối; job hiện tại tiếp tục và trạng thái có thể đọc lại.
+4. **Given** pilot hoàn tất, **When** xem lịch sử, **Then** nhóm thấy dataset/run ID, số mẫu, epoch,
+   metrics và W&B online/offline evidence; pilot không được trình bày là model phát hành.
+
 ### Edge Cases
 
 - Camera bị từ chối quyền, bị thiết bị khác chiếm dụng hoặc mất kết nối giữa lần ghi.
@@ -160,6 +183,12 @@ liệu, phiên bản mô hình, chỉ số đánh giá và ngày đánh giá.
   MUST dùng đường dẫn chuẩn, MUST NOT hiển thị raw framework message và MUST phân biệt lỗi tương thích
   API với camera permission hoặc kết quả nhận diện bị từ chối. `403` chỉ được dùng khi có chính sách
   phân quyền thật; cache validation chỉ được bật sau khi contract invalidation được công bố.
+- **FR-021**: Công cụ kiểm tra/train nội bộ MUST nằm ngoài luồng người dùng, chỉ được bật khi có
+  `VISIGN_ADMIN_TOKEN`, không commit token, và MUST xóa clip kiểm tra cùng thư mục tạm sau khi trả file
+  kết quả hoặc gặp lỗi.
+- **FR-022**: Mỗi pilot run MUST kiểm tra bản bàn giao dữ liệu, hash, feature schema và coverage trước
+  train; hệ thống MUST chỉ cho một job ở trạng thái active, lưu trạng thái/báo cáo theo run ID và MUST
+  giữ `demoReady=false` bất kể metrics pilot.
 
 ### Key Entities *(include if feature involves data)*
 
@@ -194,6 +223,9 @@ liệu, phiên bản mô hình, chỉ số đánh giá và ngày đánh giá.
 - **SC-008**: 100% kiểm thử route không tồn tại, phương thức không hợp lệ và chuẩn hóa trailing slash
   trả đúng trạng thái, giữ correlation ID cần thiết và hiển thị stable Vietnamese copy thay vì raw
   server/framework text.
+- **SC-009**: Luồng admin nội bộ vượt qua kiểm thử disabled/unauthorized, cleanup, preflight,
+  single-active-job và history; một run pilot hoàn tất có báo cáo truy vết nhưng không thể tự nâng
+  model thành `demoReady=true`.
 ## Assumptions
 
 - MVP nhận diện từng ký hiệu riêng lẻ, không diễn giải ngữ pháp hoặc chuỗi câu.

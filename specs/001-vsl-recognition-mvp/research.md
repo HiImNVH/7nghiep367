@@ -211,3 +211,31 @@ contract và trust boundary mới trước khi MVP cần đến.
 - Lưu prediction diagnostics vào SQL: loại vì MVP không có history và không cần persistence runtime.
 - Trả raw landmarks trong response: loại vì tăng payload, privacy surface và coupling với extractor.
 - Dùng `timingsMs` để quyết định accepted: loại vì latency không phản ánh độ tin cậy phân loại.
+
+## 16. Branch-first integration và bằng chứng hoàn thành
+
+**Decision**: `main` giữ Spec Kit và task checkbox. Code trên nhánh vai trò được ghi là `BRANCH` hoặc
+`PARTIAL`, không đánh dấu task hoàn thành cho đến khi review, merge và chạy lại test trên `main`.
+
+**Rationale**: Các nhánh hiện có mức trưởng thành khác nhau và được tạo từ các mốc không đồng nhất.
+Đóng task theo tuyên bố bàn giao sẽ che mất xung đột contract và thiếu bằng chứng end-to-end.
+
+**Alternatives considered**:
+
+- Đánh dấu hoàn thành theo file hiện có trên bất kỳ nhánh nào: loại vì không tạo được baseline chạy lại.
+- Merge toàn bộ nhánh tích hợp một lần: loại vì khó review và khó truy task owner khi regression.
+
+## 17. Công cụ Admin/train-model
+
+**Decision**: Giữ công cụ kiểm tra clip, preflight, pilot job và W&B history thành một user story nội
+bộ riêng. API chỉ bật khi có `VISIGN_ADMIN_TOKEN`, clip inspect được dọn sau response, mỗi lúc chỉ có
+một job active, và pilot luôn `demoReady=false`.
+
+**Rationale**: Công cụ đang có giúp nhóm lặp nhanh pipeline thật, nhưng public hóa hoặc gộp với API
+người dùng sẽ mở rộng trust boundary và dễ làm pilot bị hiểu nhầm là bản phát hành.
+
+**Alternatives considered**:
+
+- Bỏ toàn bộ công cụ vì ngoài MVP user flow: loại vì mất bằng chứng vận hành hữu ích đã có.
+- Đưa admin routes vào public `/api/v1`: loại vì contract, auth và retention policy khác nhau.
+- Dùng pilot metrics để tự bật `demoReady`: loại vì vi phạm FR-016 và full 10-meaning gate.
